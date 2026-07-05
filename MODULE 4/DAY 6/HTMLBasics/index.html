@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Demo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Bootstrap Demo</a>
+
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Faculty</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section (Jumbotron) -->
+<div class="container mt-4">
+    <div class="bg-primary text-white p-5 rounded text-center shadow">
+        <h1>Welcome to Anna University</h1>
+        <p class="lead">
+            College of Engineering Guindy - Excellence in Engineering Education
+        </p>
+
+        <button class="btn btn-warning btn-lg">Admission Open</button>
+    </div>
+</div>
+
+<!-- Grid Layout -->
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Departments</h2>
+
+    <div class="row g-3">
+
+        <div class="col-lg-3 col-md-6">
+            <div class="bg-danger text-white p-4 rounded text-center">
+                Computer Science
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="bg-success text-white p-4 rounded text-center">
+                Information Technology
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="bg-warning p-4 rounded text-center">
+                Electronics
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="bg-info text-white p-4 rounded text-center">
+                Mechanical
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Cards -->
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Popular Courses</h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow">
+
+                <img src="https://picsum.photos/300/200?1" class="card-img-top">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">Artificial Intelligence</h4>
+
+                    <p class="card-text">
+                        Learn AI, Machine Learning and Deep Learning.
+                    </p>
+
+                    <a href="#" class="btn btn-primary">Read More</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow">
+
+                <img src="https://picsum.photos/300/200?2" class="card-img-top">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">Cloud Computing</h4>
+
+                    <p class="card-text">
+                        AWS, Azure and Google Cloud Platforms.
+                    </p>
+
+                    <a href="#" class="btn btn-success">Read More</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow">
+
+                <img src="https://picsum.photos/300/200?3" class="card-img-top">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">Cyber Security</h4>
+
+                    <p class="card-text">
+                        Ethical Hacking and Network Security.
+                    </p>
+
+                    <a href="#" class="btn btn-danger">Read More</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Bootstrap Table -->
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Student Details</h2>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-hover table-striped table-success">
+
+            <thead class="table-dark">
+
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>CGPA</th>
+                <th>Year</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr>
+                <td>101</td>
+                <td>Renjitha</td>
+                <td>CSE</td>
+                <td>8.9</td>
+                <td>IV</td>
+            </tr>
+
+            <tr>
+                <td>102</td>
+                <td>Rahul</td>
+                <td>IT</td>
+                <td>8.7</td>
+                <td>III</td>
+            </tr>
+
+            <tr>
+                <td>103</td>
+                <td>Priya</td>
+                <td>ECE</td>
+                <td>9.1</td>
+                <td>II</td>
+            </tr>
+
+            <tr>
+                <td>104</td>
+                <td>Karthik</td>
+                <td>MECH</td>
+                <td>8.5</td>
+                <td>IV</td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- Bootstrap Form -->
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Student Registration</h2>
+
+    <form>
+
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Department</label>
+
+            <select class="form-select">
+                <option>CSE</option>
+                <option>IT</option>
+                <option>ECE</option>
+                <option>MECH</option>
+            </select>
+
+        </div>
+
+        <button class="btn btn-primary">Register</button>
+
+        <button class="btn btn-secondary">Reset</button>
+
+    </form>
+
+</div>
+
+<!-- Alerts -->
+<div class="container mt-5">
+
+    <div class="alert alert-success">
+        Admission Open for 2026 Batch.
+    </div>
+
+    <div class="alert alert-warning">
+        Last Date for Registration: 30 July
+    </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center p-3 mt-5">
+
+    <h5>Anna University</h5>
+
+    <p>College of Engineering Guindy, Chennai</p>
+
+    <p>© 2026 All Rights Reserved</p>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

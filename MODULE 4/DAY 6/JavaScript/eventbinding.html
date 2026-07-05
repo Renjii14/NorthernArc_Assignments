@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM</title>
+</head>
+<body>
+<button onclick="demo()">Click ME For Magic</button>
+<!--
+body->onload()
+ondbclick,onmouseover,onmouseout,onfocus,onblur,
+textfields,password,textarea:onkeyup,onkeypress,
+form->onsubmit()
+-->
+<h1 class="myh1">DOM</h1>
+<h1 id="superman">DOM</h1>
+<h1>DOM</h1>
+<h1 class="myh1">Hello Chennai</h1>
+<h1>Hello CEG</h1>
+</body>
+<script>
+    //ID
+    function demo() {
+        var headings = document.getElementById("superman");
+        headings.style.color = "red";
+        headings.style.backgroundColor = "yellow";
+
+    }
+</script>
+</html>

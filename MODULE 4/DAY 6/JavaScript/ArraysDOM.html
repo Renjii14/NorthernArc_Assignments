@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arrays DOM</title>
+</head>
+<body>
+<button onclick="demo()">Click MEEEE</button>
+<div id="content"></div>
+</body>
+<script>
+    function demo() {
+        var names = ["Lav", "Yuva", "Vishnu", "Harsh"];
+        var content="";
+        for(let i=0;i<names.length;i++){
+            content+=`<h1>Hello ${names[i].toUpperCase()},Study Well</h1>`;
+        }
+        alert(content);
+        document.getElementById("content").innerHTML=content;
+    }
+</script>
+</html>

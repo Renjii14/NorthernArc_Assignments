@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo JAVASCRIPT</title>
+</head>
+<body>
+<script>
+    alert("Hello World!!");
+    console.log("Hello World!");
+    data="Renjitha";
+    alert("Hello "+data);
+    alert(typeof data);
+    data=confirm("Are you sure you want to continue?");
+    alert(typeof data);
+    if(data){
+        alert("You chose yes!!");
+    }
+    else{
+        alert("You chose no!!");
+    }
+    name=prompt("Enter your name:");
+    alert("Dear "+name+",today please go to room and please please please learn!!");
+
+//function without param
+    function sayhello(){
+        alert("Hiiiii")
+    }
+    sayhello();
+    sayhello();
+
+//function with param
+    function sayhi(name){
+        alert("Hello"+name);
+    }
+
+    sayhi("HTML");
+    sayhi("CSS");
+
+//assigning anonymous function to a variable
+    add =function (a,b){
+        return a+b;
+    }
+    alert(add(10,20));
+    result=add(10+20);
+    alert("Result="+result);
+    alert("Result="+add(100,200));
+    alert("Result="+add(200,5000));
+
+//Lambda method
+    sayhi= (name)=>{
+        alert("Hello"+name);
+    }
+    sayhi("HTML");
+    sayhi("CSS");
+</script>
+</body>
+</html>

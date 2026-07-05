@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PropertyBinding</title>
+</head>
+<body>
+<button onclick=demo()>Click MEEEE</button>
+<div id="content"></div>
+</body>
+<script>
+  function demo(){
+
+
+    //this data will come from springboot
+    // var data="Renjitha";
+    // var content=document.getElementById("content");
+    // content.innerText="Hello "+data+",Study Well";
+    // content.innerHTML="<h1>Hello "+data+",Study Well</h1>";
+
+
+    var data={fname:"LAV",lname:"Elavarasan"};
+    var content=document.getElementById("content");
+    // content.innerText="Hello "+data+",Study Well";
+    // content.innerHTML="<h1>Hello "+data.fname+" "+data["lname"]+",Study Well</h1>";
+    content.innerHTML=`<h1>Hello ${data.fname} ${data.lname},Study Well</h1>`;
+  }
+</script>
+</html>

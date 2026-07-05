@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Datatypes</title>
+</head>
+
+<!--   Variables -&#45;&#45;&#45;&#45; var,let,const-->
+<!--    datatypes - primitive,non-primitive-->
+<!--    primitive - number,string,null,bigint,undefined,-->
+<!--    symbol(create unique values symbol(id)=id1,symbol(id)=id2 both are different,-->
+<!--    boolean-->
+
+
+<!--    non primitive -&#45;&#45; array,object-->
+
+<!--    typeof operator to check datatypes-->
+<body>
+
+
+</body>
+
+<script>
+    // Variables
+    let name = "Renjitha";
+    let age = 21;
+
+    console.log(name);
+    console.log(age);
+
+    // if-else
+    if(age >= 18)
+    {
+        console.log("Adult");
+    }
+    else
+    {
+        console.log("Minor");
+    }
+
+    // switch
+    let grade = "A";
+
+    switch(grade)
+    {
+        case "A":
+            console.log("Excellent");
+            break;
+
+        case "B":
+            console.log("Very Good");
+            break;
+
+        default:
+            console.log("Good");
+    }
+
+    // for loop
+    for(let i=1; i<=5; i++)
+    {
+        console.log(i);
+    }
+
+    // while loop
+    let x = 1;
+
+    while(x<=3)
+    {
+        console.log("While:", x);
+        x++;
+    }
+
+    // do while
+    let y = 1;
+
+    do
+    {
+        console.log("Do While:", y);
+        y++;
+    }
+    while(y<=3);
+
+    // function
+    function add(a,b)
+    {
+        return a+b;
+    }
+
+    console.log(add(10,20));
+</script>
+</html>
