@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Highlight Names</title>
+
+    <style>
+        .name-box{
+            display:inline-block;
+            padding:10px 20px;
+            margin:10px;
+            border:1px solid black;
+            background-color:white;
+            cursor:pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="sachin" class="name-box" onclick="highlight('sachin')">Sachin</div>
+
+<div id="saurav" class="name-box" onclick="highlight('saurav')">Saurav</div>
+
+<div id="rahul" class="name-box" onclick="highlight('rahul')">Rahul</div>
+
+<script>
+
+    function highlight(name)
+    {
+
+        document.getElementById("sachin").style.backgroundColor="white";
+        document.getElementById("saurav").style.backgroundColor="white";
+        document.getElementById("rahul").style.backgroundColor="white";
+
+        document.getElementById(name).style.backgroundColor="yellow";
+
+    }
+
+</script>
+
+</body>
+</html>
