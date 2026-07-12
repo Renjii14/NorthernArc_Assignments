@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee CRUD</title>
+    <meta charset="UTF-8">
+
+    <style>
+        #content{
+            color:red;
+            font-size:30px;
+        }
+
+        button,input{
+            color:white;
+            background-color:black;
+            border:4px outset grey;
+            font-size:25px;
+            margin:5px;
+            padding:5px;
+        }
+
+        button:hover{
+            border:4px inset grey;
+        }
+    </style>
+</head>
+
+<body>
+
+<input type="text" id="additem" placeholder="Enter Name">
+<input type="text" id="addsalary" placeholder="Enter Salary">
+
+<button onclick="ec.add()">Add</button>
+<button onclick="ec.sortdemo()">Sort</button>
+<button onclick="ec.rsortdemo()">Reverse Sort</button>
+
+<div id="content"></div>
+
+<script>
+
+    class EmployeeComponent{
+        names=[];
+        updateTemplate(){
+            let content="<ol>";
+            for(let i=0;i<this.names.length;i++){
+                content += `
+                <li>
+                    ${this.names[i].name.toUpperCase()}
+                    <button onclick="ec.update(${this.names[i].id})">  Update </button>
+                    <button onclick="ec.remove(${this.names[i].id})"> Remove </button>
+                </li>`;
+            }
+            content+="</ol>";
+            document.getElementById("content").innerHTML=content;
+        }
+
+
+        getAll(){
+            fetch("http://localhost:8080/api/employees")
+                .then(response=>response.json())
+                .then(data=>{
+                    this.names=data;
+                    this.updateTemplate();
+                })
+                .catch(error=>console.log(error));
+        }
+
+        add(){
+            let name=document.getElementById("additem").value;
+            let salary=document.getElementById("addsalary").value;
+            if(name=="" || salary=="") {
+                alert("Enter Name and Salary");
+                return;
+            }
+            let employee={
+                name:name,
+                salary:salary
+
+            };
+            fetch("http://localhost:8080/api/employees",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(employee)
+            })
+                .then(response=>{
+                    if(response.ok){
+                        alert("Added Successfully");
+                        document.getElementById("additem").value="";
+                        document.getElementById("addsalary").value="";
+                        this.getAll();
+                    }
+                });
+        }
+        remove(id){
+            fetch(`http://localhost:8080/api/employees/${id}`,{
+                method:"DELETE"
+            })
+                .then(response=>{
+                    if(response.ok){
+                        alert("Deleted Successfully");
+                        this.getAll();
+                    }
+                });
+        }
+
+        update(id){
+            let employee=this.names.find(emp=>emp.id==id);
+            let newName=prompt("Enter Name",employee.name);
+            let newSalary=prompt("Enter Salary",employee.salary);
+            if(newName==null || newSalary==null){
+                return;
+            }
+            employee.name=newName;
+            employee.salary=newSalary;
+            fetch(`http://localhost:8080/api/employees/${id}`,{
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(employee)
+            })
+                .then(response=>{
+                    if(response.ok){
+                        alert("Updated Successfully");
+                        this.getAll();
+                    }
+                });
+        }
+
+        sortdemo(){
+            fetch("http://localhost:8080/api/employees/salary-sort")
+                .then(response=>response.json())
+                .then(data=>{
+                    this.names=data;
+                    this.updateTemplate();
+                })
+                .catch(error=>console.log(error));
+        }
+
+        rsortdemo(){
+            fetch("http://localhost:8080/api/employees/salary-rsort")
+                .then(response=>response.json())
+                .then(data=>{
+                    this.names=data;
+                    this.updateTemplate();
+                })
+                .catch(error=>console.log(error));
+        }
+    }
+    var ec;
+    window.onload=function(){
+        ec=new EmployeeComponent();
+        ec.getAll();
+    };
+</script>
+</body>
+</html>

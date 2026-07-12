@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Asynchronous Demo</title>
+</head>
+<body>
+<button onclick="mypromise()">START</button>
+<script>
+       let answer;
+       let promiseResult=["I will cut your marks!!","We are going for a movie"];
+       function mypromise(){
+           console.log("Did you finish your homework?");
+           setTimeout(()=>{
+               answer=Math.round(Math.random());
+               alert(promiseResult[answer]);
+           },Math.random()*10*1000
+           );
+           console.log("Exiting!!!");
+   }
+</script>
+</body>
+</html>

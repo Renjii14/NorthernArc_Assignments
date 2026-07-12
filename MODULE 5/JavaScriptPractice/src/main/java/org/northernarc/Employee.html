@@ -1,0 +1,126 @@
+<html>
+<head>
+    <title>First Document</title>
+    <meta charset="UTF-8">
+    <style>
+        #content{
+            color:red;
+            font-size:50px;
+        }
+        button,input{
+            color:white;
+            background-color:black;
+            border:4px outset grey;
+            font-size:50px;
+        }
+        button:hover{
+            border:4px inset grey;
+        }
+    </style>
+</head>
+<body onload="drawlist()">
+<input type="text" id="additem" placeholder="Enter name"/>
+<input type="text" id="addsalary" placeholder="Enter salary"/>
+<button onclick="add()">Add</button>
+<button onclick="sortdemo()">Sort</button>
+<button onclick="rsortdemo()">Reverse Sort</button>
+
+<div id="content"></div>
+</body>
+<script>
+    names=[];
+    function drawlist(){
+        var content="<ol>";
+        for(let i=0;i<names.length;i++){
+            content= content+`<li>${names[i]["name"].toUpperCase()}
+		<button onclick="remove(${names[i].id})">Remove</button>
+		<button onclick="update(${names[i].id})">update</button></li>`
+        }
+        content+="</ol>";
+        //alert(content);
+        document.getElementById("content").innerHTML=content;
+    }
+
+    window.onload=function (){
+        getAll();
+    }
+    async function getAll(){
+        let response= await fetch("http://localhost:8080/api/employees",{method:"GET"})
+        let data=await response.json();
+        console.log(data);
+        names= data;
+        drawlist();
+    }
+
+    async function remove(id) {
+
+        let response=await fetch(`http://localhost:8080/api/employees/${id}`, {
+            method: "DELETE"
+        });
+                if(response.ok){
+                    alert("Deleted Successfully");
+                    getAll();
+                }
+    }
+
+    async function update(id) {
+
+        let employee = names.find(emp => emp.id == id);
+
+        employee.name = prompt("Enter Name", employee.name);
+        employee.salary = prompt("Enter Salary", employee.salary);
+
+        let response=await fetch(`http://localhost:8080/api/employees/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(employee)
+        });
+
+                if(response.ok){
+                    alert("Updated Successfully");
+                    getAll();
+                }
+    }
+
+    async function add() {
+
+        let employee = {
+            name: document.getElementById("additem").value,
+            salary: document.getElementById("addsalary").value
+        };
+
+        let response=await fetch("http://localhost:8080/api/employees", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(employee)
+        });
+                if (response.ok) {
+                    alert("Added Successfully");
+                    getAll();
+                }
+    }
+
+    async function sortdemo(){
+        let response=await fetch("http://localhost:8080/api/employees/salary-sort",
+            {method:"GET"})
+          let data=await response.json();
+                console.log(data);
+                names=data;
+                drawlist();
+
+    }
+    async function rsortdemo(){
+        let response = await fetch("http://localhost:8080/api/employees/salary-rsort",
+            {method:"GET"})
+        let data=await response.json();
+                console.log(data);
+                names=data;
+                drawlist();
+    }
+
+</script>
+</html>

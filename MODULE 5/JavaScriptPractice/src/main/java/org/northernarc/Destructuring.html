@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Destructuring Example</title>
+</head>
+<body>
+<script>
+    var obj={fname:"Vishnu",lname:"PartyPro",age:22};
+    const {fname,lname}=obj;
+    alert(fname+" "+lname);
+
+    let name="Renjtiha K";
+    let email="itsrenji@gmail.com";
+    let dept="CSE";
+
+
+    // let emp={name:name,email:email,dept:dept};
+    //console.log(emp);
+    //instead of this we are using this shortcut below.
+    let emp={name,email,dept};
+    console.log(emp);
+</script>
+</body>
+</html>

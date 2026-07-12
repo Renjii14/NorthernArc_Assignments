@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Asynchronous Demo</title>
+</head>
+<body>
+<button onclick="demo()">START</button>
+<script>
+
+    //asynchronous
+   function demo(){
+       console.log("Starting");
+       setTimeout(()=>{
+           console.log("Inside setTimeout");
+       },2000);
+console.log("Exiting!!!!!")
+   }
+</script>
+</body>
+</html>
