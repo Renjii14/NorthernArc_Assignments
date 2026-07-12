@@ -1,0 +1,103 @@
+    <app-page-header title="Customer Management" subtitle="Customer List" buttonLabel="Add Customer" buttonRoute="/create-customer"></app-page-header>
+    @if (status().success) {
+      <div class="alert alert-success" role="alert">{{ status().success }}</div>
+    }
+    @if (status().error) {
+      <div class="alert alert-danger" role="alert">{{ status().error }}</div>
+    }
+    <app-table-toolbar placeholder="Search by customer name, email, city" [term]="searchTerm()" (termChange)="searchTerm.set($event)" (search)="onSearch()"></app-table-toolbar>
+    <div class="card border-0 shadow-soft mb-3">
+      <div class="card-body py-3">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Role</label>
+            <select class="form-select form-select-sm" [ngModel]="roleFilter()" (ngModelChange)="roleFilter.set($event); onFilterChange()">
+              <option value="ALL">All Roles</option>
+              <option value="USER">User</option>
+              <option value="MANAGER">Manager</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Status</label>
+            <select class="form-select form-select-sm" [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event); onFilterChange()">
+              <option value="ALL">All Statuses</option>
+              <option value="ACTIVE">Active</option>
+              <option value="DEACTIVATED">Deactivated</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small mb-1">City</label>
+            <select class="form-select form-select-sm" [ngModel]="cityFilter()" (ngModelChange)="cityFilter.set($event); onFilterChange()">
+              <option value="ALL">All Cities</option>
+              @for (city of availableCities(); track city) {
+                <option [value]="city">{{ city }}</option>
+              }
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Sort</label>
+            <div class="d-flex gap-2 flex-wrap">
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="onSortChange('customerId')">ID</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="onSortChange('customerName')">Name</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="onSortChange('city')">City</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="onSortChange('creditScore')">Score</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card border-0 shadow-soft">
+      <div class="card-body">
+        <div class="table-responsive table-shell">
+          <table class="table table-hover align-middle">
+            <thead class="table-light sticky-top">
+              <tr>
+                <th>Customer ID <i class="bi bi-arrow-down-up ms-1"></i></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>City</th>
+                <th>Credit Score</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (customer of customerRows(); track customer.customerId) {
+              <tr class="table-clickable" (click)="openCustomer(customer.customerId)">
+                <td>#{{ customer.customerId }}</td>
+                <td>{{ customer.customerName }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phoneNumber }}</td>
+                <td>{{ customer.city }}</td>
+                <td>{{ customer.creditScore }}</td>
+                <td><app-status-badge [label]="customer.role"></app-status-badge></td>
+                <td><app-status-badge [label]="customer.active ? 'ACTIVE' : 'DEACTIVATED'"></app-status-badge></td>
+                <td>
+                  <div (click)="$event.stopPropagation()">
+                    <app-table-action-buttons [actions]="rowActions" (actionClick)="onAction($event, customer.customerId)"></app-table-action-buttons>
+                  </div>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        @if (status().loading) {
+          <div class="mt-3"><span class="spinner-border spinner-border-sm me-2"></span>Loading customers...</div>
+        }
+        <app-pagination
+          [currentPage]="page()"
+          [totalPages]="totalPages()"
+          [totalRecords]="totalElements()"
+          [pageSize]="size()"
+          [pageSizes]="pageSizeOptions"
+          (pageChange)="onPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)"></app-pagination>
+      </div>
+    </div>
+  
+

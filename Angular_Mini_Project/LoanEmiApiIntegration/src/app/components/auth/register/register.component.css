@@ -1,0 +1,32 @@
+@import '../login/login.component.css';
+
+.password-rules {
+	list-style: none;
+}
+
+.password-rules li {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.84rem;
+	color: #8a96a6;
+	margin-bottom: 0.25rem;
+}
+
+.password-rules li i {
+	color: #95a3b6;
+}
+
+.password-rules li.rule-valid {
+	color: #1f8c5a;
+}
+
+.password-rules li.rule-valid i {
+	color: #1f8c5a;
+}
+
+.field-error {
+	color: #c0384a;
+	font-size: 0.84rem;
+	font-weight: 500;
+}

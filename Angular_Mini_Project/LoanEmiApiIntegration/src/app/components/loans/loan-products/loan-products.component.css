@@ -1,0 +1,116 @@
+.product-card { border-radius: 14px; }
+
+.product-meta {
+	background: #f8fbff;
+	border: 1px solid #e1ebf5;
+	border-radius: 10px;
+	padding: 0.75rem;
+}
+
+.timeline-compact {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.timeline-step {
+	font-size: 0.72rem;
+	padding: 0.1rem 0.45rem;
+	border-radius: 999px;
+	border: 1px solid #d6dee8;
+	background: #f5f7fa;
+	color: #5b6776;
+}
+
+.timeline-step.done {
+	border-color: #9bd3b4;
+	background: #e8f7ee;
+	color: #21683f;
+}
+
+.timeline-step.current {
+	border-color: #b7c9ff;
+	background: #e8efff;
+	color: #214592;
+}
+
+.timeline-step.upcoming {
+	opacity: 0.78;
+}
+
+.latest-row {
+	box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.08);
+}
+
+.request-counter-strip {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.card-body .form-select.form-select-sm,
+.card-body .form-control.form-control-sm {
+	min-width: 7.25rem;
+}
+
+.counter-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.35rem 0.7rem;
+	border: 1px solid #d8e2ef;
+	border-radius: 999px;
+	background: #f7faff;
+	color: #36517a;
+	font-size: 0.8rem;
+	font-weight: 600;
+}
+
+.counter-chip .chip-value {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.4rem;
+	height: 1.4rem;
+	padding: 0 0.3rem;
+	border-radius: 999px;
+	background: #ffffff;
+	border: 1px solid #d8e2ef;
+	font-size: 0.75rem;
+}
+
+.counter-chip.active {
+	border-color: #7aa7ff;
+	background: #e9f1ff;
+	color: #1f4180;
+}
+
+@media (max-width: 991.98px) {
+	.requests-table thead {
+		display: none;
+	}
+
+	.requests-table tbody tr {
+		display: block;
+		padding: 0.75rem;
+		margin-bottom: 0.75rem;
+		border: 1px solid #e6ebf2;
+		border-radius: 0.75rem;
+	}
+
+	.requests-table tbody td {
+		display: grid;
+		grid-template-columns: 8rem 1fr;
+		gap: 0.5rem;
+		border: 0;
+		padding: 0.3rem 0;
+	}
+
+	.requests-table tbody td::before {
+		content: attr(data-label);
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: #6c7a89;
+	}
+}
+

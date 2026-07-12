@@ -1,0 +1,66 @@
+    <app-page-header title="Pay EMI" subtitle="EMI Payment Processing"></app-page-header>
+    @if (status().success) {
+      <div class="alert alert-success" role="alert">{{ status().message }}</div>
+    }
+    @if (status().error) {
+      <div class="alert alert-danger" role="alert">{{ status().error }}</div>
+    }
+    <div class="row g-3">
+      <div class="col-lg-7">
+        <div class="card border-0 shadow-soft">
+          <div class="card-body">
+            <form class="row g-3">
+              <app-select-input
+                id="customerSelect"
+                label="Customer *"
+                [options]="customerOptions()"
+                [model]="selectedCustomerOption()"
+                (modelChange)="onCustomerChange($event)"></app-select-input>
+
+              <app-select-input
+                id="loanSelect"
+                label="Loan *"
+                [options]="loanOptions()"
+                [model]="selectedLoanOption()"
+                (modelChange)="onLoanChange($event)"></app-select-input>
+
+              <app-select-input
+                id="pendingEmiSelect"
+                label="Pending EMI *"
+                [options]="pendingEmiOptions()"
+                [model]="selectedPendingEmiOption()"
+                (modelChange)="onPendingEmiChange($event)"></app-select-input>
+
+              <app-text-input id="emiId" label="EMI ID (Auto-filled)" placeholder="EMI ID" [model]="payment.emiId" (modelChange)="payment.emiId = +$any($event)"></app-text-input>
+              <app-text-input id="amount" label="Amount (Auto-filled)" placeholder="Amount" [model]="payment.amount" (modelChange)="payment.amount = +$any($event)"></app-text-input>
+              <app-select-input id="mode" label="Payment Mode *" [options]="paymentModes" [model]="payment.paymentMode" (modelChange)="payment.paymentMode = $event"></app-select-input>
+              <app-text-input id="ref" label="Reference Number" placeholder="Reference" [model]="payment.referenceNumber" (modelChange)="payment.referenceNumber = $any($event)"></app-text-input>
+              <app-form-action-buttons submitLabel="Submit Payment" submitClass="btn btn-success" [loading]="status().loading" (resetClick)="reset()" (cancelClick)="reset()" (submitClick)="submit()"></app-form-action-buttons>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card border-0 shadow-soft h-100">
+          <div class="card-body">
+            <h6>Payment Workflow</h6>
+            <ol class="small text-muted ps-3 mb-3">
+              <li>Select Customer and Loan</li>
+              <li>Pick Pending EMI</li>
+              <li>Verify auto-filled details</li>
+              <li>Submit payment</li>
+            </ol>
+            @if (status().success) {
+            <div class="alert alert-success mt-3 mb-2">
+              <i class="bi bi-check-circle me-2"></i>Payment recorded successfully.
+            </div>
+            }
+            <p class="mb-1"><strong>EMI ID:</strong> {{ paymentResponse()?.emiId || 8012 }}</p>
+            <p class="mb-1"><strong>Status:</strong> {{ paymentResponse()?.status || 'PAID' }}</p>
+            <p class="mb-0"><strong>Receipt No:</strong> {{ payment.referenceNumber || 'RCP-2026-8012' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+

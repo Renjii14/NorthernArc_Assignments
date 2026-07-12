@@ -1,0 +1,185 @@
+    <app-page-header title="Payment History" subtitle="EMI Receipts and Status"></app-page-header>
+    @if (status().error) {
+      <div class="alert alert-danger" role="alert">{{ status().error }}</div>
+    }
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <button type="button" class="btn btn-outline-primary btn-sm" (click)="exportCsv()"><i class="bi bi-filetype-csv me-1"></i>Export CSV</button>
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="exportPdf()"><i class="bi bi-file-earmark-pdf me-1"></i>Export PDF</button>
+    </div>
+    <app-table-toolbar placeholder="Search by EMI ID, reference, status" [term]="searchTerm()" (termChange)="searchTerm.set($event)" (search)="onSearch()"></app-table-toolbar>
+    <div class="card border-0 shadow-soft mb-3">
+      <div class="card-body py-3">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Date</label>
+            <input type="date" class="form-control form-control-sm" [ngModel]="selectedDate()" (ngModelChange)="selectedDate.set($event); onFilterChange()" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Payment Mode</label>
+            <select class="form-select form-select-sm" [ngModel]="selectedMode()" (ngModelChange)="selectedMode.set($event); onFilterChange()">
+              <option value="ALL">All Modes</option>
+              <option value="UPI">UPI</option>
+              <option value="NET_BANKING">Net Banking</option>
+              <option value="CARD">Card</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Status</label>
+            <select class="form-select form-select-sm" [ngModel]="selectedStatus()" (ngModelChange)="selectedStatus.set($event); onFilterChange()">
+              <option value="ALL">All Statuses</option>
+              <option value="PAID">Paid</option>
+              <option value="PARTIAL">Partial</option>
+              <option value="OVERDUE">Overdue</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Customer</label>
+            <input class="form-control form-control-sm" placeholder="Search customer" [ngModel]="customerTerm()" (ngModelChange)="customerTerm.set($event); onFilterChange()" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card border-0 shadow-soft">
+      <div class="card-body">
+        @if (status().loading) {
+          <div class="mb-3"><span class="spinner-border spinner-border-sm me-2"></span>Loading payment history...</div>
+        }
+        <div class="table-responsive table-shell">
+          <table class="table table-hover align-middle">
+            <thead class="table-light sticky-top">
+              <tr>
+                <th>EMI ID</th>
+                <th>Amount</th>
+                <th>Mode</th>
+                <th>Reference</th>
+                <th>Status</th>
+                <th>Customer</th>
+                <th>Penalty</th>
+                <th>Days Past Due</th>
+                <th>Payment Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of rows(); track row.emiId) {
+              <tr class="table-clickable" (click)="viewReceipt(row)">
+                <td>#{{ row.emiId }}</td>
+                <td>{{ row.amountPaid }}</td>
+                <td>{{ row.paymentMode }}</td>
+                <td>{{ row.referenceNumber }}</td>
+                <td><app-status-badge [label]="row.status"></app-status-badge></td>
+                <td>{{ resolveCustomer(row) }}</td>
+                <td>{{ row.penalty }}</td>
+                <td>{{ row.daysPastDue }}</td>
+                <td>{{ row.paymentDate }}</td>
+                <td>
+                  <div class="d-flex gap-2" (click)="$event.stopPropagation()">
+                    <button class="btn btn-sm btn-outline-primary" (click)="viewReceipt(row)">Open Receipt</button>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="downloadReceipt(row)">Download</button>
+                  </div>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        @if (!status().loading && rows().length === 0) {
+          <div class="text-muted mt-2">No payment history found.</div>
+        }
+        <app-pagination
+          [currentPage]="page()"
+          [totalPages]="totalPages()"
+          [totalRecords]="totalElements()"
+          [pageSize]="size()"
+          [pageSizes]="pageSizeOptions"
+          (pageChange)="onPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)"></app-pagination>
+      </div>
+    </div>
+
+    @if (showReceiptModal()) {
+    <div class="receipt-modal-backdrop" (click)="closeReceiptModal()"></div>
+    <div class="receipt-modal card border-0 shadow-soft">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="mb-0">Payment Receipt Details</h6>
+          <button class="btn btn-sm btn-outline-secondary" (click)="closeReceiptModal()">Close</button>
+        </div>
+
+        @if (receiptLoading()) {
+          <div class="text-muted"><span class="spinner-border spinner-border-sm me-2"></span>Loading receipt...</div>
+        } @else if (receiptDetails()) {
+        <div class="receipt p-3 border rounded-3" style="max-height: 600px; overflow-y: auto;">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between"><span>Receipt Number</span><strong>{{ receiptDetails()!.receiptNumber }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Generated</span><strong>{{ receiptDetails()!.generatedAt | date: 'medium' }}</strong></div>
+            </div>
+          </div>
+
+          <hr>
+          <h6>Customer Details</h6>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between"><span>Name</span><strong>{{ receiptDetails()!.customerName }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Email</span><strong>{{ receiptDetails()!.customerEmail }}</strong></div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between"><span>Phone</span><strong>{{ receiptDetails()!.customerPhone }}</strong></div>
+              <div class="d-flex justify-content-between"><span>City</span><strong>{{ receiptDetails()!.customerCity }}</strong></div>
+            </div>
+          </div>
+
+          <hr>
+          <h6>Loan Details</h6>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between"><span>Loan ID</span><strong>#{{ receiptDetails()!.loanId }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Loan Type</span><strong>{{ receiptDetails()!.loanType }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Principal</span><strong>INR {{ receiptDetails()!.loanPrincipal }}</strong></div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between"><span>Interest Rate</span><strong>{{ receiptDetails()!.loanInterestRate }}%</strong></div>
+              <div class="d-flex justify-content-between"><span>Tenure</span><strong>{{ receiptDetails()!.loanTenureMonths }} months</strong></div>
+              <div class="d-flex justify-content-between"><span>Disbursement Date</span><strong>{{ receiptDetails()!.disbursementDate }}</strong></div>
+            </div>
+          </div>
+
+          <hr>
+          <h6>EMI Details</h6>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between"><span>EMI ID</span><strong>#{{ receiptDetails()!.emiId }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Installment #</span><strong>{{ receiptDetails()!.installmentNumber }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Due Date</span><strong>{{ receiptDetails()!.dueDate }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Amount Due</span><strong>INR {{ receiptDetails()!.amountDue }}</strong></div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between"><span>Principal Component</span><strong>INR {{ receiptDetails()!.principalComponent }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Interest Component</span><strong>INR {{ receiptDetails()!.interestComponent }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Penalty</span><strong>INR {{ receiptDetails()!.penaltyAmount }}</strong></div>
+              <div class="d-flex justify-content-between"><span>EMI Status</span><strong>{{ receiptDetails()!.emiStatus }}</strong></div>
+            </div>
+          </div>
+
+          <hr>
+          <h6>Payment Details</h6>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between"><span>Amount Paid</span><strong>INR {{ receiptDetails()!.amountPaid }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Payment Date</span><strong>{{ receiptDetails()!.paymentDate }}</strong></div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between"><span>Payment Mode</span><strong>{{ receiptDetails()!.paymentMode }}</strong></div>
+              <div class="d-flex justify-content-between"><span>Reference Number</span><strong>{{ receiptDetails()!.referenceNumber }}</strong></div>
+            </div>
+          </div>
+        </div>
+        } @else {
+        <div class="text-muted">Select a row from the table to preview the receipt.</div>
+        }
+      </div>
+    </div>
+    }
+  
+

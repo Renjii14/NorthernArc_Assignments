@@ -1,0 +1,116 @@
+    <app-page-header title="Loan Management" subtitle="Loan Listing" [buttonLabel]="canManageLoans() ? 'Create Loan' : ''" buttonRoute="/create-loan"></app-page-header>
+    @if (status().success) {
+      <div class="alert alert-success" role="alert">{{ status().success }}</div>
+    }
+    @if (status().error) {
+      <div class="alert alert-danger" role="alert">{{ status().error }}</div>
+    }
+    <app-table-toolbar placeholder="Search by loan id, customer, city" [term]="searchTerm()" (termChange)="searchTerm.set($event)" (search)="onSearch()"></app-table-toolbar>
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <button type="button" class="btn btn-sm" [class.btn-primary]="searchField() === 'all'" [class.btn-outline-primary]="searchField() !== 'all'" (click)="onSearchFieldChange('all')">All</button>
+      <button type="button" class="btn btn-sm" [class.btn-primary]="searchField() === 'id'" [class.btn-outline-primary]="searchField() !== 'id'" (click)="onSearchFieldChange('id')">Loan ID</button>
+      <button type="button" class="btn btn-sm" [class.btn-primary]="searchField() === 'customer'" [class.btn-outline-primary]="searchField() !== 'customer'" (click)="onSearchFieldChange('customer')">Customer</button>
+      <button type="button" class="btn btn-sm" [class.btn-primary]="searchField() === 'city'" [class.btn-outline-primary]="searchField() !== 'city'" (click)="onSearchFieldChange('city')">City</button>
+    </div>
+    <div class="card border-0 shadow-soft mb-3">
+      <div class="card-body py-3">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Loan Type</label>
+            <select class="form-select form-select-sm" [ngModel]="loanTypeFilter()" (ngModelChange)="loanTypeFilter.set($event); onFilterChange()">
+              <option value="ALL">All Loan Types</option>
+              @for (loanType of availableLoanTypes(); track loanType) {
+                <option [value]="loanType">{{ loanType }}</option>
+              }
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Status</label>
+            <select class="form-select form-select-sm" [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event); onFilterChange()">
+              <option value="ALL">All Statuses</option>
+              <option value="ACTIVE">Active</option>
+              <option value="CLOSED">Closed</option>
+              <option value="OVERDUE">Overdue</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Interest Band</label>
+            <select class="form-select form-select-sm" [ngModel]="interestFilter()" (ngModelChange)="interestFilter.set($event); onFilterChange()">
+              <option value="ALL">All</option>
+              <option value="LOW">Low (&lt;9%)</option>
+              <option value="MEDIUM">Medium (9-12%)</option>
+              <option value="HIGH">High (&gt;12%)</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small mb-1">Sort</label>
+            <div class="d-flex flex-wrap gap-2">
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="onSortChange('loanId')">ID</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="onSortChange('loanType')">Type</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="onSortChange('annualInterestRate')">Rate</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="onSortChange('principalAmount')">Principal</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="onSortChange('emiAmount')">EMI</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card border-0 shadow-soft">
+      <div class="card-body">
+        <div class="table-responsive table-shell">
+          <table class="table table-hover align-middle">
+            <thead class="table-light sticky-top">
+              <tr>
+                <th>Loan ID <i class="bi bi-arrow-down-up"></i></th>
+                <th>Loan Type</th>
+                <th>Principal</th>
+                <th>Interest Rate</th>
+                <th>Tenure</th>
+                <th>EMI</th>
+                <th>Status</th>
+                <th>Customer</th>
+                <th>City</th>
+                <th>{{ canManageLoans() ? 'Actions' : 'View' }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (loan of loanRows(); track loan.loanId) {
+              <tr class="table-clickable" (click)="openLoan(loan.loanId)">
+                <td>#{{ loan.loanId }}</td>
+                <td>{{ loan.loanType }}</td>
+                <td>{{ loan.principalAmount }}</td>
+                <td>{{ loan.annualInterestRate }}</td>
+                <td>{{ loan.tenureMonths }}m</td>
+                <td>{{ loan.emiAmount }}</td>
+                <td><app-status-badge [label]="loan.loanStatus"></app-status-badge></td>
+                <td>{{ loan.customerName }}</td>
+                <td>{{ loan.city }}</td>
+                <td>
+                  <div (click)="$event.stopPropagation()">
+                    <app-table-action-buttons [actions]="availableActions()" (actionClick)="onAction($event, loan.loanId)"></app-table-action-buttons>
+                  </div>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        @if (!status().loading && loanRows().length === 0) {
+          <div class="text-muted mt-2">No loans found for the selected search criteria.</div>
+        }
+        @if (status().loading) {
+          <div class="mt-3"><span class="spinner-border spinner-border-sm me-2"></span>Loading loans...</div>
+        }
+        <app-pagination
+          [currentPage]="page()"
+          [totalPages]="totalPages()"
+          [totalRecords]="totalElements()"
+          [pageSize]="size()"
+          [pageSizes]="pageSizeOptions"
+          (pageChange)="onPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)"></app-pagination>
+      </div>
+    </div>
+  
+

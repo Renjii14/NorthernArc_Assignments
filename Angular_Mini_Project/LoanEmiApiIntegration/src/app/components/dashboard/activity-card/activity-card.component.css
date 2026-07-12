@@ -1,0 +1,4 @@
+.timeline { border-left: 2px solid #d7e4ef; padding-left: 0.8rem; }
+.time-item { position: relative; margin-bottom: 0.9rem; color: #51687d; }
+.time-item::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #0b3c5d; position: absolute; left: -1.15rem; top: 0.3rem; }
+

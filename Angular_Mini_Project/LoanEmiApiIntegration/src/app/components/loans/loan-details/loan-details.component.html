@@ -1,0 +1,52 @@
+    <app-page-header title="Loan Details" subtitle="Loan Summary and Payment Trail"></app-page-header>
+    @if (status().success) {
+      <div class="alert alert-success" role="alert">{{ status().success }}</div>
+    }
+    @if (status().error) {
+      <div class="alert alert-danger" role="alert">{{ status().error }}</div>
+    }
+    @if (status().loading) {
+      <div class="alert alert-info" role="alert"><span class="spinner-border spinner-border-sm me-2"></span>Loading loan details...</div>
+    }
+    <div class="row g-3">
+      <div class="col-lg-7">
+        <div class="card border-0 shadow-soft">
+          <div class="card-body">
+            <h6 class="mb-3">Loan Snapshot</h6>
+            @if (loan(); as item) {
+            <div class="row g-3">
+              <div class="col-md-6"><small class="text-muted">Loan ID</small><p class="mb-0">#{{ item.loanId }}</p></div>
+              <div class="col-md-6"><small class="text-muted">Type</small><p class="mb-0">{{ item.loanType }}</p></div>
+              <div class="col-md-6"><small class="text-muted">Principal Amount</small><p class="mb-0">{{ formatCurrency(item.principalAmount) }}</p></div>
+              <div class="col-md-6"><small class="text-muted">Interest Rate</small><p class="mb-0">{{ item.annualInterestRate }}%</p></div>
+              <div class="col-md-6"><small class="text-muted">Tenure</small><p class="mb-0">{{ item.tenureMonths }} months</p></div>
+              <div class="col-md-6"><small class="text-muted">Monthly EMI</small><p class="mb-0">{{ formatCurrency(item.emiAmount) }}</p></div>
+              <div class="col-md-6"><small class="text-muted">Total Interest</small><p class="mb-0">{{ formatOptionalCurrency(item.totalInterest) }}</p></div>
+              <div class="col-md-6"><small class="text-muted">Total Repayment</small><p class="mb-0">{{ formatOptionalCurrency(item.totalRepayment) }}</p></div>
+              <div class="col-md-6"><small class="text-muted">Outstanding Amount</small><p class="mb-0">{{ formatOptionalCurrency(item.outstandingAmount) }}</p></div>
+              <div class="col-md-6"><small class="text-muted">Status</small><p class="mb-0"><app-status-badge [label]="item.loanStatus"></app-status-badge></p></div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card border-0 shadow-soft">
+          <div class="card-body">
+            @if (canManageLoan()) {
+            <h6>Management Actions</h6>
+            <div class="d-grid gap-2 mt-3">
+              <button class="btn btn-outline-primary" (click)="edit()">Update Interest Rate</button>
+              <button class="btn btn-outline-danger" (click)="delete()">Delete Loan</button>
+            </div>
+            } @else {
+            <h6>Loan Actions</h6>
+            <p class="text-muted mb-2">You can monitor this loan and track repayments from the payment history page.</p>
+            <a class="btn btn-outline-primary btn-sm" routerLink="/payments">Open Payment History</a>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  
+

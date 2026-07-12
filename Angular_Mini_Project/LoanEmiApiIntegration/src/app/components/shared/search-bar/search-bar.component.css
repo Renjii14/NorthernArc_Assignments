@@ -1,0 +1,4 @@
+    .search-wrap .form-control, .search-wrap .input-group-text, .search-wrap .btn { border-color: #d4dde7; }
+    .search-wrap .form-control:focus { box-shadow: none; border-color: #8fb6d2; }
+  
+

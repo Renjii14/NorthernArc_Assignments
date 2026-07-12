@@ -1,0 +1,5 @@
+.layout-wrap { background: #f5f7fa; min-height: calc(100vh - 74px); }
+.content { min-width: 0; }
+.mobile-menu { position: fixed; inset: 74px 0 0 0; z-index: 1030; background: rgba(0, 0, 0, 0.3); }
+.mobile-menu app-sidebar { max-width: 280px; display: block; height: 100%; }
+

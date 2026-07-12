@@ -1,0 +1,121 @@
+    <app-page-header title="Interest Rate Management" subtitle="Portfolio And Loan-Level Interest Controls"></app-page-header>
+    @if (status().success) {
+      <div class="alert alert-success" role="alert"><i class="bi bi-check-circle me-2"></i>{{ status().message }}</div>
+    }
+    @if (status().error) {
+      <div class="alert alert-danger" role="alert"><i class="bi bi-exclamation-triangle me-2"></i>{{ status().error }}</div>
+    }
+
+    <div class="row g-3 mb-3">
+      <div class="col-xl-8">
+        <div class="card border-0 shadow-soft h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Bulk Interest Revision</h5>
+              <span class="badge text-bg-light">Step 1</span>
+            </div>
+
+            <p class="text-muted mb-2">Select one or more loan categories to revise annual interest.</p>
+            <div class="loan-type-grid mb-3">
+              @for (item of bulkLoanTypes; track item.code) {
+                <button
+                  type="button"
+                  class="loan-type-chip"
+                  [class.active]="isLoanTypeSelected(item.code)"
+                  (click)="toggleLoanType(item.code)">
+                  <i class="bi me-2" [class]="item.icon"></i>{{ item.label }}
+                </button>
+              }
+            </div>
+
+            <form class="row g-3">
+              <app-text-input
+                id="bulkRate"
+                label="Bulk Annual Interest Rate (%)"
+                placeholder="Enter rate"
+                type="number"
+                colClass="col-md-6"
+                [model]="bulkRate"
+                (modelChange)="bulkRate = +$any($event)"></app-text-input>
+
+              <div class="col-12 d-flex gap-2 justify-content-end">
+                <button type="button" class="btn btn-outline-secondary" (click)="reset()">Reset</button>
+                <button type="button" class="btn btn-primary" (click)="submitBulkPreview()">
+                  <i class="bi bi-eye me-2"></i>Preview Revision
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4">
+        <div class="card border-0 shadow-soft h-100 preview-card">
+          <div class="card-body">
+            <h6 class="mb-3">Impact Preview</h6>
+            <p class="mb-2"><i class="bi bi-speedometer2 me-2 text-secondary"></i>{{ currentRateLabel() }}</p>
+            <p class="mb-2"><i class="bi bi-arrow-up-right-circle me-2 text-primary"></i>{{ newRateLabel() }}</p>
+            <p class="mb-2"><i class="bi bi-people me-2 text-warning"></i>{{ affectedLoansLabel() }}</p>
+            <p class="mb-2"><i class="bi bi-diagram-3 me-2 text-primary"></i>{{ projectedImpactLabel() }}</p>
+            <p class="mb-0"><i class="bi bi-graph-up-arrow me-2 text-success"></i>{{ projectedDeltaLabel() }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card border-0 shadow-soft mb-3">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Individual Loan Override</h5>
+          <span class="badge text-bg-light">Step 2</span>
+        </div>
+
+        <form class="row g-3">
+          <app-text-input
+            id="loanId"
+            label="Loan ID"
+            placeholder="Enter loan id"
+            type="number"
+            colClass="col-md-6"
+            [model]="individualLoanId || ''"
+            (modelChange)="individualLoanId = +$any($event)"></app-text-input>
+
+          <app-text-input
+            id="loanRate"
+            label="New Annual Interest Rate (%)"
+            placeholder="Enter new rate"
+            type="number"
+            colClass="col-md-6"
+            [model]="individualRate || ''"
+            (modelChange)="individualRate = +$any($event)"></app-text-input>
+
+          <div class="col-12 d-flex gap-2 justify-content-end">
+            <button type="button" class="btn btn-outline-secondary" (click)="reset()">Reset</button>
+            <button type="button" class="btn btn-warning" [disabled]="status().loading" (click)="submitIndividualUpdate()">
+              @if (status().loading) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+              }
+              <i class="bi bi-arrow-repeat me-2"></i>Update Interest
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    @if (showConfirmModal()) {
+      <div class="confirm-backdrop" (click)="closeConfirmModal()"></div>
+      <div class="confirm-modal card border-0 shadow-soft">
+        <div class="card-body">
+          <h5>Confirm Bulk Revision</h5>
+          <p class="text-muted">{{ confirmMessage() }}</p>
+          <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-outline-secondary" (click)="closeConfirmModal()">Cancel</button>
+            <button class="btn btn-danger" (click)="submitBulkUpdate()">
+              <i class="bi bi-check2-circle me-2"></i>Confirm Update
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  
+

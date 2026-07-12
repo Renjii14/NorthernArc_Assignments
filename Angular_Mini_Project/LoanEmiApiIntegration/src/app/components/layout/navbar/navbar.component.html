@@ -1,0 +1,99 @@
+    <header class="topbar d-flex align-items-center justify-content-between gap-3 px-3 px-lg-4" (click)="closeMenus()">
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-link text-white p-0" (click)="toggleSidebar.emit()">
+          <i class="bi bi-list fs-3"></i>
+        </button>
+        <div class="topbar-title-wrap">
+          <h5 class="mb-0 text-white d-flex align-items-center gap-2">
+            <i class="bi bi-grid-1x2-fill title-icon"></i>
+            Lendora Workspace
+          </h5>
+          <small class="text-light opacity-75 d-flex align-items-center gap-3 topbar-subtitle">
+            <span><i class="bi bi-bank2 me-1"></i>Loan Lifecycle</span>
+            <span><i class="bi bi-graph-up-arrow me-1"></i>Collections Monitoring</span>
+            <span><i class="bi bi-stars me-1"></i>Powered by Lendora</span>
+          </small>
+        </div>
+      </div>
+      <div class="d-none d-md-flex flex-grow-1 justify-content-center px-3">
+        <div class="input-group nav-search">
+          <select class="form-select border-0 search-scope" [(ngModel)]="searchScope" aria-label="Global search scope">
+            <option value="all">All</option>
+            <option value="customers">Customers</option>
+            <option value="loans">Loans</option>
+            <option value="emis">EMIs</option>
+            <option value="payments">Payments</option>
+          </select>
+          <span class="input-group-text bg-white border-0"><i class="bi bi-search"></i></span>
+          <input class="form-control border-0" placeholder="Global search by customer, loan, emi, payment" [(ngModel)]="searchTerm" (keyup.enter)="runGlobalSearch()" />
+          <button type="button" class="btn btn-light" (click)="runGlobalSearch()">Go</button>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-3" (click)="$event.stopPropagation()">
+        <div class="position-relative">
+        <button class="btn btn-light position-relative rounded-circle icon-btn" (click)="toggleNotifications()">
+          <i class="bi bi-bell"></i>
+          <span class="badge rounded-pill bg-danger notif-dot">{{ notificationCount() }}</span>
+        </button>
+        @if (showNotifications) {
+          <div class="position-absolute end-0 mt-2 p-2 bg-white rounded-3 shadow-sm border notification-panel" style="z-index: 1000;">
+            <div class="d-flex justify-content-between align-items-center px-2 py-1 border-bottom">
+              <strong>Notifications</strong>
+              <button type="button" class="btn btn-link btn-sm text-decoration-none" (click)="markAllAsRead()">Mark all read</button>
+            </div>
+            @for (group of groupedNotifications(); track group.category) {
+              <div class="notification-category">{{ group.category }}</div>
+              @for (item of group.items; track item.title) {
+                <button type="button" class="notification-item text-start" [class.unread]="item.unread" (click)="openNotification(item)">
+                  <div class="d-flex align-items-start gap-2">
+                    <i class="bi mt-1" [class]="item.icon"></i>
+                    <div class="flex-grow-1">
+                      <div class="fw-semibold small">{{ item.title }}</div>
+                      <div class="text-muted small">{{ item.message }}</div>
+                      <div class="notification-time small">{{ item.time }}</div>
+                    </div>
+                  </div>
+                </button>
+              }
+            }
+            @if (notificationItems().length === 0) {
+              <div class="px-2 py-3 text-muted small">No notifications right now.</div>
+            }
+          </div>
+        }
+        </div>
+
+        <div class="position-relative">
+          <button class="btn btn-light dropdown-toggle" type="button" (click)="toggleProfileMenu()">
+            <i class="bi bi-person-circle me-1"></i> Profile
+          </button>
+          @if (showProfileMenu) {
+          <ul class="list-unstyled position-absolute end-0 mt-2 py-2 bg-white rounded-3 shadow-sm border" style="min-width: 220px; z-index: 1000;">
+            <li><span class="dropdown-item-text text-muted small px-3">Signed in as {{ getUserRole() }}</span></li>
+            <li><hr class="dropdown-divider my-1" /></li>
+            <li>
+              <a class="dropdown-item profile-menu-item" routerLink="/profile" [queryParams]="{ section: 'account' }" (click)="closeMenus()">
+                <i class="bi bi-person-badge"></i>
+                <span>My Account</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item profile-menu-item" routerLink="/profile" [queryParams]="{ section: 'password' }" (click)="closeMenus()">
+                <i class="bi bi-key"></i>
+                <span>Change Password</span>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider my-1" /></li>
+            <li>
+              <button type="button" class="dropdown-item profile-menu-item text-danger" (click)="confirmLogout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+              </button>
+            </li>
+          </ul>
+          }
+        </div>
+      </div>
+    </header>
+  
+

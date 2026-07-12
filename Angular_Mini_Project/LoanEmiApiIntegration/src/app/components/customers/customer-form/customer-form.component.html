@@ -1,0 +1,26 @@
+    <app-page-header title="Add Customer" subtitle="Customer Onboarding"></app-page-header>
+    @if (status().success) {
+      <div class="alert alert-success" role="alert">{{ status().message }}</div>
+    }
+    @if (status().error) {
+      <div class="alert alert-danger" role="alert">{{ status().error }}</div>
+    }
+    <div class="card border-0 shadow-soft">
+      <div class="card-body">
+        <form class="row g-3">
+          <app-text-input id="name" label="Customer Name *" placeholder="Name" [model]="customer.customerName" (modelChange)="customer.customerName = $any($event)"></app-text-input>
+          <app-text-input id="email" label="Email *" placeholder="Email" type="email" [model]="customer.email" (modelChange)="customer.email = $any($event)"></app-text-input>
+          <app-text-input id="password" label="Password *" placeholder="Password" type="password" [model]="customer.password" (modelChange)="customer.password = $any($event)"></app-text-input>
+          <app-text-input id="phone" label="Phone Number *" placeholder="Phone" [model]="customer.phoneNumber" (modelChange)="customer.phoneNumber = $any($event)"></app-text-input>
+          <app-text-input id="city" label="City *" placeholder="City" colClass="col-md-4" [model]="customer.city" (modelChange)="customer.city = $any($event)"></app-text-input>
+          <app-text-input id="score" label="Credit Score *" placeholder="Credit Score" colClass="col-md-4" [model]="customer.creditScore" (modelChange)="customer.creditScore = +$any($event)"></app-text-input>
+          <app-select-input id="role" label="Role *" colClass="col-md-4" [options]="roles" [model]="customer.role" (modelChange)="customer.role = $event"></app-select-input>
+          <div class="col-12">
+            <app-validation-message message="All fields marked with * are required. Validation wiring will be added in API phase."></app-validation-message>
+          </div>
+          <app-form-action-buttons submitLabel="Submit" submitClass="btn btn-primary" [loading]="status().loading" (resetClick)="reset()" (cancelClick)="reset()" (submitClick)="submit()"></app-form-action-buttons>
+        </form>
+      </div>
+    </div>
+  
+

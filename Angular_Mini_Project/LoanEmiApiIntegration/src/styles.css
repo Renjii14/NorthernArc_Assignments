@@ -1,0 +1,72 @@
+:root {
+	--brand-primary: #0b3c5d;
+	--brand-secondary: #ffffff;
+	--brand-accent: #41a6d9;
+	--brand-success: #198754;
+	--brand-warning: #f59f00;
+	--brand-danger: #dc3545;
+	--brand-bg: #f5f7fa;
+	--brand-text: #2f4355;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Segoe UI", "Trebuchet MS", "Helvetica Neue", sans-serif;
+	background: radial-gradient(circle at top left, #eaf3fa, #f5f7fa 48%);
+	color: var(--brand-text);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #16364f;
+	letter-spacing: 0.2px;
+}
+
+.shadow-soft {
+	box-shadow: 0 8px 28px rgba(18, 45, 66, 0.08);
+}
+
+.card {
+	border-radius: 16px;
+}
+
+.btn-primary {
+	--bs-btn-bg: var(--brand-primary);
+	--bs-btn-border-color: var(--brand-primary);
+	--bs-btn-hover-bg: #0a334f;
+	--bs-btn-hover-border-color: #0a334f;
+}
+
+.table > :not(caption) > * > * {
+	padding: 0.8rem 0.75rem;
+}
+
+.table thead th {
+	border-bottom: 1px solid #e0e8f1;
+	color: #5f7387;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	letter-spacing: 0.06em;
+}
+
+.table tbody tr:hover {
+	background: #f5faff;
+}
+
+.page-link {
+	color: var(--brand-primary);
+}
+
+.page-item.active .page-link {
+	background-color: var(--brand-primary);
+	border-color: var(--brand-primary);
+}

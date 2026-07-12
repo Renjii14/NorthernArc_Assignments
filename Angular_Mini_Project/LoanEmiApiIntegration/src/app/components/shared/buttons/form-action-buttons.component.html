@@ -1,0 +1,12 @@
+    <div class="col-12 d-flex gap-2 justify-content-end">
+      <button type="reset" class="btn btn-outline-secondary" (click)="resetClick.emit()">{{ resetLabel }}</button>
+      <button type="button" class="btn btn-outline-dark" (click)="cancelClick.emit()">{{ cancelLabel }}</button>
+      <button type="button" [class]="submitClass" [disabled]="loading" (click)="submitClick.emit()">
+        @if (loading) {
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        }
+        {{ submitLabel }}
+      </button>
+    </div>
+  
+

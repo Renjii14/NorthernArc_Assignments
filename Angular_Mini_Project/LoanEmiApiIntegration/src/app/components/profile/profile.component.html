@@ -1,0 +1,62 @@
+    <app-page-header title="Profile" subtitle="User Profile and Preferences"></app-page-header>
+        @if (status().error) {
+            <div class="alert alert-danger" role="alert">{{ status().error }}</div>
+        }
+        @if (status().loading) {
+            <div class="alert alert-info" role="alert"><span class="spinner-border spinner-border-sm me-2"></span>Loading profile...</div>
+        }
+        @if (section() === 'password') {
+        <div class="card border-0 shadow-soft mb-3">
+            <div class="card-body">
+                    @if (passwordState().error) {
+                        <div class="alert alert-danger mb-0" role="alert">{{ passwordState().error }}</div>
+                    }
+                    @if (passwordState().success) {
+                        <div class="alert alert-success mb-0" role="alert">{{ passwordState().success }}</div>
+                    }
+                    <form class="row g-3 mt-2" (ngSubmit)="submitPasswordChange()">
+                        <div class="col-md-4">
+                            <label class="form-label small">Current Password</label>
+                            <input
+                                type="password"
+                                class="form-control"
+                                [(ngModel)]="currentPassword"
+                                name="currentPassword"
+                                autocomplete="current-password"
+                                required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small">New Password</label>
+                            <input
+                                type="password"
+                                class="form-control"
+                                [(ngModel)]="newPassword"
+                                name="newPassword"
+                                autocomplete="new-password"
+                                required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small">Confirm New Password</label>
+                            <input
+                                type="password"
+                                class="form-control"
+                                [(ngModel)]="confirmPassword"
+                                name="confirmPassword"
+                                autocomplete="new-password"
+                                required />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary" [disabled]="passwordState().loading">
+                                @if (passwordState().loading) {
+                                    <span class="spinner-border spinner-border-sm me-2"></span>
+                                }
+                                Update Password
+                            </button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+        }
+    <app-profile-card [profile]="profile()"></app-profile-card>
+  
+

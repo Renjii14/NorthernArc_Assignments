@@ -1,0 +1,87 @@
+    <app-page-header [title]="editMode() ? 'Edit Customer' : 'Customer Details'" [subtitle]="editMode() ? 'Update Customer Profile' : 'Customer Profile'"></app-page-header>
+    @if (status().success) {
+      <div class="alert alert-success" role="alert">{{ status().success }}</div>
+    }
+    @if (status().error) {
+      <div class="alert alert-danger" role="alert">{{ status().error }}</div>
+    }
+    @if (status().loading) {
+      <div class="alert alert-info" role="alert"><span class="spinner-border spinner-border-sm me-2"></span>Loading customer details...</div>
+    }
+    @if (editMode()) {
+      <div class="card border-0 shadow-soft">
+        <div class="card-body">
+          @if (customer(); as item) {
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Customer Name</label>
+              <input type="text" class="form-control" [(ngModel)]="form.customerName" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" [(ngModel)]="form.email" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Phone</label>
+              <input type="text" class="form-control" [(ngModel)]="form.phoneNumber" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">City</label>
+              <input type="text" class="form-control" [(ngModel)]="form.city" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Credit Score</label>
+              <input type="number" class="form-control" [(ngModel)]="form.creditScore" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Role</label>
+              <select class="form-select" [(ngModel)]="form.role">
+                @for (role of roles; track role) {
+                  <option [value]="role">{{ role }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+              <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" [checked]="form.active" (change)="form.active = !form.active" id="activeToggle" />
+                <label class="form-check-label" for="activeToggle">Active</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Customer ID</label>
+              <input type="text" class="form-control" [value]="item.customerId" disabled />
+            </div>
+            <div class="col-12 d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-outline-secondary" (click)="cancelEdit()">Cancel</button>
+              <button type="button" class="btn btn-primary" [disabled]="status().loading" (click)="saveChanges()">
+                @if (status().loading) {
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                }
+                Save Changes
+              </button>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="card border-0 shadow-soft">
+        <div class="card-body">
+          <h6 class="mb-3">Customer Information</h6>
+          @if (customer(); as item) {
+          <div class="row g-3">
+            <div class="col-md-6"><small class="text-muted">Customer ID</small><p class="mb-0">#{{ item.customerId }}</p></div>
+            <div class="col-md-6"><small class="text-muted">Name</small><p class="mb-0">{{ item.customerName }}</p></div>
+            <div class="col-md-6"><small class="text-muted">Email</small><p class="mb-0">{{ item.email }}</p></div>
+            <div class="col-md-6"><small class="text-muted">Phone</small><p class="mb-0">{{ item.phoneNumber }}</p></div>
+            <div class="col-md-6"><small class="text-muted">City</small><p class="mb-0">{{ item.city }}</p></div>
+            <div class="col-md-6"><small class="text-muted">Role</small><p class="mb-0">{{ item.role }}</p></div>
+            <div class="col-md-6"><small class="text-muted">Credit Score</small><p class="mb-0">{{ item.creditScore }}</p></div>
+            <div class="col-md-6"><small class="text-muted">Status</small><p class="mb-0"><app-status-badge [label]="item.active ? 'ACTIVE' : 'DEACTIVATED'"></app-status-badge></p></div>
+          </div>
+          }
+        </div>
+      </div>
+    }
+  
+

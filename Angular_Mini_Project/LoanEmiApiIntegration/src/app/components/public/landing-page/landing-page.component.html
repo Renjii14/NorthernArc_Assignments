@@ -1,0 +1,52 @@
+<section class="landing-page">
+  <header class="landing-header">
+    <div class="container d-flex align-items-center">
+      <a class="brand-link" routerLink="/">
+        <i class="bi bi-cash-coin"></i>
+        <span>Lendora</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="hero container text-center">
+    <div class="hero-icon mx-auto mb-3">
+      <i class="bi bi-cash-coin"></i>
+    </div>
+    <h1 class="hero-title mb-2">Lendora</h1>
+    <p class="hero-subtitle mb-4">Your Trusted Lending Partner</p>
+    <div class="hero-actions d-flex align-items-center justify-content-center gap-3 flex-wrap">
+      <a class="btn btn-hero" routerLink="/login">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Login Now
+      </a>
+      <a class="btn btn-hero-outline" routerLink="/register">
+        <i class="bi bi-person-plus-fill me-2"></i>Register
+      </a>
+    </div>
+  </section>
+
+  <section class="stats-strip">
+    <div class="container">
+      <div class="row g-3 text-center">
+        @for (item of stats; track item.label) {
+          <div class="col-6 col-md-3">
+            <div class="stat-item">
+              <div class="stat-value">{{ item.value }}</div>
+              <div class="stat-label">{{ item.label }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    <div class="container text-center">
+      <p class="mb-2">&copy; {{ year }} Lendora | Trusted Lending Partner</p>
+      <div class="d-flex justify-content-center gap-4 flex-wrap">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </div>
+  </footer>
+</section>

@@ -1,0 +1,5 @@
+.toast-stack {
+  z-index: 1080;
+  max-width: 420px;
+  width: min(100%, 420px);
+}

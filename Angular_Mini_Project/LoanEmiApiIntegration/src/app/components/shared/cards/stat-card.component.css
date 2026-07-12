@@ -1,0 +1,8 @@
+.stat-card { border-radius: 14px; }
+.icon-badge { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; font-size: 1rem; }
+.tone-primary { background: rgba(11, 60, 93, 0.1); color: #0b3c5d; }
+.tone-success { background: rgba(25, 135, 84, 0.12); color: #198754; }
+.tone-warning { background: rgba(255, 193, 7, 0.18); color: #b58100; }
+.tone-danger { background: rgba(220, 53, 69, 0.14); color: #dc3545; }
+.tone-info { background: rgba(13, 202, 240, 0.14); color: #0b87a8; }
+

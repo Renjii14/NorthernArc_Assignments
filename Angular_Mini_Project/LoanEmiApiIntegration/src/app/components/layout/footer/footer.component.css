@@ -1,0 +1,6 @@
+.footer { border-top: 1px solid #dde6ef; background: #fff; color: #6c7f93; border-radius: 12px 12px 0 0; }
+
+.footer small {
+	white-space: nowrap;
+}
+
