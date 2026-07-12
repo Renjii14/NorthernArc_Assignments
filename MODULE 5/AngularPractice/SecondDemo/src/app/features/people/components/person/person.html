@@ -1,0 +1,29 @@
+<div class="card shadow h-100">
+
+    <div class="card-body">
+
+        <h4 class="text-primary">
+            {{p.name}}
+        </h4>
+
+        <hr>
+
+        <p><b>Id :</b> {{p.id}}</p>
+
+        <p><b>Age :</b> {{p.age}}</p>
+
+        <p><b>Email :</b> {{p.email}}</p>
+
+    </div>
+
+    <div class="card-footer bg-white">
+
+        <button
+            class="btn btn-danger w-100"
+            (click)="removePerson(p.id)">
+            Remove
+        </button>
+
+    </div>
+
+</div>

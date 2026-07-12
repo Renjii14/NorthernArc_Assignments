@@ -1,0 +1,13 @@
+<input
+    type="text"
+    #nameInput
+    class="form-control"
+    placeholder="Enter Name">
+
+<br>
+
+<button
+    class="btn btn-primary"
+    (click)="nameService.addName(nameInput.value); nameInput.value=''">
+    Add Name
+</button>

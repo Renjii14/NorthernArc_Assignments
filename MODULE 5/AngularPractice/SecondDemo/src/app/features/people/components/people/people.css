@@ -1,0 +1,12 @@
+.card{
+    border-radius:12px;
+}
+
+.card:hover{
+    transform:scale(1.02);
+    transition:0.3s;
+}
+
+.container{
+    max-width:1200px;
+}

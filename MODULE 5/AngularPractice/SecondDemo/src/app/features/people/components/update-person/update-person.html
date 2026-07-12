@@ -1,0 +1,50 @@
+<div class="card shadow">
+
+    <div class="card-header bg-warning">
+        <h4 class="mb-0">Update Person</h4>
+    </div>
+
+    <div class="card-body">
+
+        <div class="mb-3">
+            <label>Id</label>
+            <input
+                class="form-control"
+                type="number"
+                [(ngModel)]="updateid"
+                (blur)="searchPerson()">
+        </div>
+
+        <div class="mb-3">
+            <label>Name</label>
+            <input
+                class="form-control"
+                type="text"
+                [(ngModel)]="updatename">
+        </div>
+
+        <div class="mb-3">
+            <label>Age</label>
+            <input
+                class="form-control"
+                type="number"
+                [(ngModel)]="updateage">
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input
+                class="form-control"
+                type="email"
+                [(ngModel)]="updateemail">
+        </div>
+
+        <button
+            class="btn btn-warning w-100"
+            (click)="updatePerson()">
+            Update Person
+        </button>
+
+    </div>
+
+</div>

@@ -1,0 +1,28 @@
+.employee-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	background: #ffffff;
+}
+
+.employee-meta {
+	min-width: 0;
+}
+
+.employee-name {
+	font-size: 1rem;
+	font-weight: 600;
+	color: #1f2937;
+}
+
+.employee-salary {
+	color: #6b7280;
+}
+
+.remove-btn {
+	min-width: 100px;
+}

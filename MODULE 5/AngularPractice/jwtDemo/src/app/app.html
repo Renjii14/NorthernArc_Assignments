@@ -1,0 +1,7 @@
+@if(!checkToken()){
+<button type="button" class="btn btn-primary" routerLink="login">Login</button>
+}
+@else{
+<button type="button" class="btn btn-primary" routerLink="logout">Logout</button>
+}
+<router-outlet></router-outlet>

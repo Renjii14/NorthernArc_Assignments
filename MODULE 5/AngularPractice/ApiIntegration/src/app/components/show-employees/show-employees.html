@@ -1,0 +1,32 @@
+<section class="container pb-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <h2 class="card-title h4 mb-4 text-primary">Employees</h2>
+
+          @if (status().loading) {
+            <div class="alert alert-info mb-0" role="alert">Loading employees...</div>
+          }
+
+          @if (status().error) {
+            <div class="alert alert-danger mb-0" role="alert">Error loading employees: {{ status().error }}</div>
+          }
+
+          @if (status().success) {
+            @if (employees().length === 0) {
+              <div class="alert alert-warning mb-0" role="alert">No employees found.</div>
+            } @else {
+              <div class="employee-list">
+                @for (employee of employees(); track employee.id) {
+                  <app-show-employee [employee]="employee" (removed)="onRemoved($event)"></app-show-employee>
+                }
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  

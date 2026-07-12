@@ -1,0 +1,47 @@
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-success text-white">
+                    <h3>Add Book</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <input
+                        class="form-control mb-3"
+                        type="text"
+                        placeholder="Title"
+                        [(ngModel)]="Book.title">
+
+                    <input
+                        class="form-control mb-3"
+                        type="text"
+                        placeholder="Author"
+                        [(ngModel)]="Book.author">
+
+                    <input
+                        class="form-control mb-3"
+                        type="text"
+                        placeholder="Publisher"
+                        [(ngModel)]="Book.publisher">
+
+                    <button
+                        class="btn btn-success w-100"
+                        (click)="addBook()">
+                        Add Book
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

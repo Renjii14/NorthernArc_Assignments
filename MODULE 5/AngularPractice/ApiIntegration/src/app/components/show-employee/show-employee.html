@@ -1,0 +1,18 @@
+<div class="employee-row">
+    <div class="employee-meta">
+        <p class="employee-name mb-0">{{ employee.name }}</p>
+        <p class="employee-salary mb-0">Salary: {{ employee.salary }}</p>
+    </div>
+
+    <button type="button" class="btn btn-danger remove-btn" (click)="remove()" [disabled]="status().loading">
+        Remove
+    </button>
+</div>
+
+@if (status().loading) {
+    <p class="small text-muted mb-0 mt-1">Deleting employee...</p>
+}
+
+@if (status().error) {
+    <p class="small text-danger mb-0 mt-1">Error deleting employee: {{ status().error }}</p>
+}

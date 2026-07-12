@@ -1,0 +1,9 @@
+<ul>
+    @for (book of bookService.getBooks()(); track book) { 
+        <li>
+            <strong>Book ID:</strong> {{ book.id }}<br>
+            <strong>Title:</strong> {{ book.title }}<br>
+            <strong>Author:</strong> {{ book.author }}<br>  
+        </li>
+    }
+</ul>

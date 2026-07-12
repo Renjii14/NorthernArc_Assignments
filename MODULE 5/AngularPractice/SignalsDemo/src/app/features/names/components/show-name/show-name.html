@@ -1,0 +1,6 @@
+<ul>
+  @for (name of nameService.getNames()(); track name) {
+    <li>{{ name }}</li>
+    <button (click)="nameService.removeName(name)">Remove</button>
+  }
+</ul>

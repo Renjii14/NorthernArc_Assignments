@@ -1,0 +1,39 @@
+<div class="container mt-4">
+
+    <h1 class="text-center text-primary mb-5">
+        📝 Todo Management
+    </h1>
+
+    <div class="row">
+
+        <!-- Add Todo -->
+        <div class="col-lg-6 mb-4">
+            <app-add-todo></app-add-todo>
+        </div>
+
+        <!-- Update Todo -->
+        <div class="col-lg-6 mb-4">
+            <app-update-todo></app-update-todo>
+        </div>
+
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+
+        @for(todo of todoService.getTodos(); track todo.id){
+
+        <div class="col-lg-4 col-md-6 mb-4">
+
+            <app-todo-item
+                [todo]="todo">
+            </app-todo-item>
+
+        </div>
+
+        }
+
+    </div>
+
+</div>

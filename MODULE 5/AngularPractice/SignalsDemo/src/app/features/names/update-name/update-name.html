@@ -1,0 +1,33 @@
+<h2>Update Name</h2>
+
+<div>
+    <label>Old Name</label>
+    <input
+        type="text"
+        [(ngModel)]="oldName"
+        placeholder="Enter old name">
+</div>
+
+<br>
+
+<div>
+    <label>New Name</label>
+    <input
+        type="text"
+        [(ngModel)]="newName"
+        placeholder="Enter new name">
+</div>
+
+<br>
+
+<button (click)="update()">Update</button>
+
+<hr>
+
+<h3>Names</h3>
+
+<ul>
+   @for(name of names(); track name){
+    <li>{{name}}</li>
+}
+</ul>

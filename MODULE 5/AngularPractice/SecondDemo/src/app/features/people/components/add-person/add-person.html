@@ -1,0 +1,45 @@
+<div class="card shadow">
+
+    <div class="card-header bg-success text-white">
+        <h4 class="mb-0">Add Person</h4>
+    </div>
+
+    <div class="card-body">
+
+        <div class="mb-3">
+            <label>Id</label>
+            <input class="form-control"
+                   type="number"
+                   [(ngModel)]="newid">
+        </div>
+
+        <div class="mb-3">
+            <label>Name</label>
+            <input class="form-control"
+                   type="text"
+                   [(ngModel)]="newname">
+        </div>
+
+        <div class="mb-3">
+            <label>Age</label>
+            <input class="form-control"
+                   type="number"
+                   [(ngModel)]="newage">
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input class="form-control"
+                   type="email"
+                   [(ngModel)]="newemail">
+        </div>
+
+        <button
+            class="btn btn-success w-100"
+            (click)="addPerson()">
+            Add Person
+        </button>
+
+    </div>
+
+</div>

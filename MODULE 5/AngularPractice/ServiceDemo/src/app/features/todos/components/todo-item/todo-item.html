@@ -1,0 +1,58 @@
+<div class="card shadow-lg border-0 h-100">
+
+    <div class="card-header bg-primary text-white">
+
+        <h4 class="mb-0">
+            {{todo.title}}
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <h6 class="text-secondary">
+            Description
+        </h6>
+
+        <p>
+            {{todo.description}}
+        </p>
+
+        <hr>
+
+        <p>
+
+            <strong>Status :</strong>
+
+            @if(todo.completed){
+
+                <span class="badge bg-success ms-2">
+                    Completed
+                </span>
+
+            }
+            @else{
+
+                <span class="badge bg-danger ms-2">
+                    Pending
+                </span>
+
+            }
+
+        </p>
+
+    </div>
+
+    <div class="card-footer bg-white border-0">
+
+        <button
+            class="btn btn-outline-danger w-100"
+            (click)="todoService.deleteTodo(todo.id)">
+
+            🗑 Remove
+
+        </button>
+
+    </div>
+
+</div>
