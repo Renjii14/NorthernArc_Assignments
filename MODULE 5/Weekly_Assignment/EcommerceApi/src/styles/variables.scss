@@ -1,0 +1,248 @@
+@use "sass:math";
+
+// ============================================
+// DESIGN SYSTEM VARIABLES
+// ============================================
+
+// ============================================
+// COLORS
+// ============================================
+
+// Primary Colors - Unique Orange/Teal Accent
+$primary: #FF6B35;
+$primary-hover: #FF5722;
+$primary-light: #FFE4D6;
+$primary-lighter: #FFF5F0;
+
+// Secondary Colors - Deep Teal
+$secondary: #004E89;
+$secondary-dark: #003366;
+
+// Neutral Colors - Warm Off-White
+$background: #FFFBF7;
+$surface: #FFFFFF;
+$border: #F5E6D3;
+$border-light: #FAF3E6;
+$border-dark: #E8D4C0;
+
+// Text Colors - Warm Dark
+$text-primary: #2D1810;
+$text-secondary: #6B5344;
+$text-tertiary: #9A8878;
+$text-inverse: #FFFFFF;
+
+// Status Colors - Unique Vibrant
+$danger: #D32F2F;
+$danger-light: #FFEBEE;
+$danger-lighter: #FFF8F8;
+
+$success: #388E3C;
+$success-light: #E8F5E9;
+$success-lighter: #F1F8F6;
+
+$warning: #F57C00;
+$warning-light: #FFF3E0;
+$warning-lighter: #FFFAF0;
+
+$info: #1976D2;
+$info-light: #E3F2FD;
+$info-lighter: #F3F8FF;
+
+// Special Colors
+$wishlist: #D81B60;
+$wishlist-light: #F8BBD0;
+$wishlist-lighter: #FCE4EC;
+
+$discount: #C2185B;
+$discount-light: #F48FB1;
+
+$rating: #FF9800;
+$rating-light: #FFE0B2;
+
+// Modern Gradients - Unique Orange/Teal
+$gradient-primary: linear-gradient(135deg, #FF6B35 0%, #004E89 100%);
+$gradient-premium: linear-gradient(135deg, #FF6B35 0%, #FF9800 50%, #004E89 100%);
+$gradient-dark: linear-gradient(135deg, #2D1810 0%, #004E89 100%);
+
+// ============================================
+// TYPOGRAPHY
+// ============================================
+
+// Font Family - Modern & Premium
+$font-primary: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-mono: 'Fira Code', 'Courier New', monospace;
+
+// Base Font Size
+$base-font-size: 16px;
+$base-line-height: 1.6;
+
+// Font Sizes
+$font-size-h1: 48px;
+$font-size-h2: 36px;
+$font-size-h3: 28px;
+$font-size-h4: 24px;
+$font-size-h5: 20px;
+$font-size-h6: 18px;
+$font-size-body: 16px;
+$font-size-small: 14px;
+$font-size-caption: 12px;
+$font-size-button: 16px;
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// Line Heights
+$line-height-tight: 1.2;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+$line-height-loose: 2;
+
+// Letter Spacing
+$letter-spacing-tight: -0.01em;
+$letter-spacing-normal: 0;
+$letter-spacing-wide: 0.025em;
+$letter-spacing-wider: 0.05em;
+
+// ============================================
+// SPACING
+// ============================================
+
+// 8px Spacing System
+$space-1: 8px;    // 1 unit
+$space-2: 16px;   // 2 units
+$space-3: 24px;   // 3 units
+$space-4: 32px;   // 4 units
+$space-5: 40px;   // 5 units
+$space-6: 48px;   // 6 units
+$space-8: 64px;   // 8 units
+$space-10: 80px;  // 10 units
+$space-12: 96px;  // 12 units
+
+// ============================================
+// BREAKPOINTS
+// ============================================
+
+$breakpoint-xs: 320px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-2xl: 1400px;
+
+// ============================================
+// BORDER RADIUS
+// ============================================
+
+$radius-sm: 10px;
+$radius-md: 14px;
+$radius-lg: 18px;
+$radius-xl: 22px;
+$radius-full: 9999px;
+$radius-card: 18px;
+$radius-button: 14px;
+$radius-input: 14px;
+
+// ============================================
+// SHADOWS
+// ============================================
+
+$shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-sm: 0 4px 10px rgba(62, 25, 104, 0.08);
+$shadow-md: 0 8px 22px rgba(62, 25, 104, 0.1);
+$shadow-lg: 0 14px 32px rgba(62, 25, 104, 0.12);
+$shadow-xl: 0 20px 44px rgba(62, 25, 104, 0.14);
+$shadow-2xl: 0 28px 56px rgba(62, 25, 104, 0.16);
+$shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+$shadow-none: none;
+
+// Shadow on Hover
+$shadow-hover: 0 16px 32px rgba(62, 25, 104, 0.2);
+$shadow-card-hover: 0 20px 40px rgba(62, 25, 104, 0.18);
+
+// ============================================
+// TRANSITIONS
+// ============================================
+
+$transition-fast: 150ms;
+$transition-normal: 250ms;
+$transition-slow: 350ms;
+$transition-slowest: 500ms;
+
+$easing-linear: linear;
+$easing-in: cubic-bezier(0.4, 0, 1, 1);
+$easing-out: cubic-bezier(0, 0, 0.2, 1);
+$easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+$transition-default: all $transition-normal $easing-in-out;
+$transition-smooth: all $transition-slow $easing-in-out;
+
+// ============================================
+// Z-INDEX SCALE
+// ============================================
+
+$z-dropdown: 100;
+$z-sticky: 200;
+$z-fixed: 300;
+$z-modal-backdrop: 400;
+$z-modal: 500;
+$z-popover: 600;
+$z-tooltip: 700;
+$z-notification: 800;
+
+// ============================================
+// COMPONENT SIZES
+// ============================================
+
+// Button Heights
+$button-height-sm: 36px;
+$button-height-md: 44px;
+$button-height-lg: 48px;
+$button-height-xl: 56px;
+
+// Button Padding
+$button-padding-sm: 8px 16px;
+$button-padding-md: 12px 24px;
+$button-padding-lg: 12px 32px;
+$button-padding-xl: 16px 40px;
+
+// Input Height
+$input-height: 48px;
+$input-padding-x: 16px;
+$input-padding-y: 12px;
+
+// Icon Button Size
+$icon-button-size: 44px;
+
+// Floating Button Size
+$floating-button-size: 56px;
+
+// ============================================
+// LAYERS
+// ============================================
+
+// Backdrop opacity
+$backdrop-opacity: 0.5;
+$backdrop-light: rgba(0, 0, 0, 0.3);
+$backdrop-dark: rgba(0, 0, 0, 0.7);
+
+// ============================================
+// ASPECT RATIOS
+// ============================================
+
+$aspect-square: math.div(1, 1);
+$aspect-video: math.div(16, 9);
+$aspect-3-2: math.div(3, 2);
+$aspect-4-3: math.div(4, 3);
+
+// ============================================
+// MAX WIDTHS
+// ============================================
+
+$max-width-content: 1200px;
+$max-width-container: 1400px;
+$max-width-page: 100%;

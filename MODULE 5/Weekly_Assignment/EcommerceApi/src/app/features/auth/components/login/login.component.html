@@ -1,0 +1,191 @@
+<div class="cartora-auth-page">
+  <header class="hero-nav">
+    <a class="brand-link" href="#top">
+      <i class="bi bi-cart-check-fill"></i>
+      <span>NexCart</span>
+    </a>
+  </header>
+
+  <section class="hero-section" id="top">
+    <div class="hero-icon">
+      <i class="bi bi-cart-check-fill"></i>
+    </div>
+    <h1 class="hero-title">NexCart</h1>
+    <p class="hero-tagline">The Next Generation of Shopping.</p>
+  </section>
+
+  <section class="stats-strip" aria-label="Platform statistics">
+    <article class="stat-item"><h3>5,000+</h3><p>Active Customers</p></article>
+    <article class="stat-item"><h3>₹500Cr</h3><p>Orders Processed</p></article>
+    <article class="stat-item"><h3>24/7</h3><p>Support Available</p></article>
+    <article class="stat-item"><h3>99.9%</h3><p>Uptime</p></article>
+  </section>
+
+  <section class="login-section" id="login-panel">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2 class="auth-title">Welcome Back</h2>
+        <p class="auth-subtitle">Access your NexCart dashboard</p>
+      </div>
+
+      <div class="auth-messages">
+        <div
+          *ngIf="(authService.errorMessage)() && (authService.authStatus)() === 'error'"
+          class="alert alert-danger"
+          role="alert"
+        >
+          <div class="alert-icon">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+          </div>
+          <div class="alert-content">
+            <p class="alert-title">Authentication Failed</p>
+            <p class="alert-message">{{ (authService.errorMessage)() }}</p>
+          </div>
+          <button type="button" class="btn-close" (click)="authService.resetAuthStatus()" aria-label="Close"></button>
+        </div>
+
+        <div *ngIf="(authService.authStatus)() === 'success'" class="alert alert-success" role="alert">
+          <div class="alert-icon">
+            <i class="bi bi-check-circle-fill"></i>
+          </div>
+          <div class="alert-content">
+            <p class="alert-title">Successfully Signed In</p>
+            <p class="alert-message">Redirecting you to your dashboard...</p>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form" autocomplete="off">
+        <div class="form-group">
+          <label for="email" class="form-label-above">Email Address</label>
+          <div class="input-wrapper">
+            <input
+              id="email"
+              type="email"
+              class="auth-input"
+              formControlName="email"
+              placeholder="name@company.com"
+              [class.is-invalid]="isFieldInvalid('email')"
+              autocomplete="email"
+              aria-describedby="email-error"
+            />
+          </div>
+          <div class="error-message" id="email-error" *ngIf="isFieldInvalid('email')">
+            <i class="bi bi-exclamation-circle"></i>
+            <span>{{ getFieldError('email') }}</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="label-header">
+            <label for="password" class="form-label-above">Password</label>
+            <a href="#" class="quick-link">Forgot password?</a>
+          </div>
+          <div class="input-wrapper password-wrapper">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              class="auth-input"
+              formControlName="password"
+              placeholder="Enter your password"
+              [class.is-invalid]="isFieldInvalid('password')"
+              autocomplete="current-password"
+              aria-describedby="password-error"
+            />
+            <button
+              type="button"
+              class="btn-toggle-password"
+              (click)="togglePasswordVisibility()"
+              [disabled]="(authService.authStatus)() === 'loading'"
+              aria-label="Toggle password visibility"
+              title="Toggle password visibility"
+            >
+              <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+          <div class="error-message" id="password-error" *ngIf="isFieldInvalid('password')">
+            <i class="bi bi-exclamation-circle"></i>
+            <span>{{ getFieldError('password') }}</span>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <label class="checkbox-custom">
+            <input type="checkbox" formControlName="rememberMe" class="checkbox-input" />
+            <span class="checkbox-label">
+              <span class="checkbox-box"></span>
+              <span class="checkbox-text">Remember this device</span>
+            </span>
+          </label>
+        </div>
+
+        <button
+          type="submit"
+          class="btn-primary-cta"
+          [disabled]="loginForm.invalid || (authService.authStatus)() === 'loading'"
+          [class.is-loading]="(authService.authStatus)() === 'loading'"
+        >
+          <span class="btn-content">
+            <span *ngIf="(authService.authStatus)() !== 'loading'">Sign In Securely</span>
+            <span *ngIf="(authService.authStatus)() === 'loading'">
+              <span class="spinner"></span>
+              Signing in...
+            </span>
+          </span>
+        </button>
+      </form>
+
+      <div class="divider-section">
+        <span class="divider-text">Don't have an account?</span>
+      </div>
+
+      <button routerLink="/auth/register" class="btn-secondary-cta">
+        <i class="bi bi-person-plus"></i>
+        Create an Account
+      </button>
+    </div>
+  </section>
+
+  <section class="features-section" id="features">
+    <h2>Powerful Features</h2>
+    <p>Everything you need to move seamlessly from cart activity to customer success.</p>
+
+    <div class="features-grid">
+      <article class="feature-card">
+        <i class="bi bi-people-fill"></i>
+        <h3>Customer Management</h3>
+        <p>Track customer profiles and interactions in one place.</p>
+      </article>
+      <article class="feature-card">
+        <i class="bi bi-box2-heart-fill"></i>
+        <h3>Product Workflow</h3>
+        <p>Manage catalog updates and product performance quickly.</p>
+      </article>
+      <article class="feature-card">
+        <i class="bi bi-bag-check-fill"></i>
+        <h3>Order Intelligence</h3>
+        <p>Monitor fulfillment health and order status in real time.</p>
+      </article>
+      <article class="feature-card">
+        <i class="bi bi-credit-card-2-front-fill"></i>
+        <h3>Secure Payments</h3>
+        <p>Support reliable checkout with clear transaction visibility.</p>
+      </article>
+      <article class="feature-card">
+        <i class="bi bi-graph-up-arrow"></i>
+        <h3>Performance Analytics</h3>
+        <p>Use business metrics to improve growth and retention.</p>
+      </article>
+      <article class="feature-card">
+        <i class="bi bi-shield-lock-fill"></i>
+        <h3>Platform Security</h3>
+        <p>Protect accounts with robust role-based access controls.</p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="public-footer">
+    <p>&copy; {{ currentYear }} NexCart. All rights reserved.</p>
+  </footer>
+
+</div>
