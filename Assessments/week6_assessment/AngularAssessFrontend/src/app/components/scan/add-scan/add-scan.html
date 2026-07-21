@@ -1,0 +1,63 @@
+<section class="section">
+  <header class="page-header">
+    <h1>Add Scan</h1>
+    <p>Create a new website scan record.</p>
+  </header>
+
+  <div class="card form-card">
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="form-grid">
+        <div class="field">
+          <label for="domainName">Domain Name</label>
+          <input id="domainName" type="text" formControlName="domainName" placeholder="example.com" />
+          @if (hasError('domainName')) {
+            <small class="field-error">Domain Name is required and must be at least 2 characters.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="numPages">Number of Pages</label>
+          <input id="numPages" type="number" formControlName="numPages" min="0" />
+          @if (hasError('numPages')) {
+            <small class="field-error">Number of Pages is required and must be 0 or greater.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="numBrokenLinks">Number of Broken Links</label>
+          <input id="numBrokenLinks" type="number" formControlName="numBrokenLinks" min="0" />
+          @if (hasError('numBrokenLinks')) {
+            <small class="field-error">Number of Broken Links is required and must be 0 or greater.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="numMissingImages">Number of Missing Images</label>
+          <input id="numMissingImages" type="number" formControlName="numMissingImages" min="0" />
+          @if (hasError('numMissingImages')) {
+            <small class="field-error">Number of Missing Images is required and must be 0 or greater.</small>
+          }
+        </div>
+      </div>
+
+      @if (error()) {
+        <p class="alert alert-error">{{ error() }}</p>
+      }
+
+      @if (success()) {
+        <p class="alert alert-success">{{ success() }}</p>
+      }
+
+      @if (loading()) {
+        <app-loading message="Creating scan..."></app-loading>
+      }
+
+      <div class="form-actions">
+        <a class="btn btn-ghost" routerLink="/scans">Cancel</a>
+        <button class="btn btn-primary" type="submit" [disabled]="form.invalid || loading()">
+          {{ loading() ? 'Saving...' : 'Create Scan' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

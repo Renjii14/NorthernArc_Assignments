@@ -1,0 +1,13 @@
+<header class="top-nav">
+  <div class="container nav-content">
+    <a class="brand" routerLink="/">Scan Management</a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      <a routerLink="/scans" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Scans</a>
+      <a routerLink="/scans/add" routerLinkActive="active">Add Scan</a>
+      <a routerLink="/scans/search" routerLinkActive="active">Search</a>
+      <a routerLink="/system-health" routerLinkActive="active">System Health</a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,64 @@
+<section class="section">
+  <header class="page-header">
+    <h1>Scan Dashboard</h1>
+    <p>Track and manage website scan quality metrics in one place.</p>
+  </header>
+
+  <div class="dashboard-grid">
+    <article class="card stat-card">
+      <p class="label">Total Scans</p>
+      <p class="value">{{ totalScans() }}</p>
+    </article>
+  </div>
+
+  @if (loading()) {
+    <app-loading message="Loading dashboard data..."></app-loading>
+  }
+
+  @if (error()) {
+    <p class="alert alert-error">{{ error() }}</p>
+  }
+
+  @if (!loading() && !error()) {
+    <section class="card recent-card">
+      <div class="recent-header">
+        <h2>Recent Scans</h2>
+        <button class="btn btn-ghost" type="button" (click)="loadScans()">Refresh</button>
+      </div>
+
+      @if (recentScans().length === 0) {
+        <app-empty-state
+          title="No scans yet"
+          message="Add your first scan to start tracking website quality."
+          actionLabel="Create Scan"
+          actionRoute="/scans/add"
+        ></app-empty-state>
+      } @else {
+        <div class="table-wrap">
+          <table class="app-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Domain Name</th>
+                <th>Pages</th>
+                <th>Broken Links</th>
+                <th>Missing Images</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (scan of recentScans(); track scan.id) {
+                <tr>
+                  <td>{{ scan.id }}</td>
+                  <td>{{ scan.domainName }}</td>
+                  <td>{{ scan.numPages }}</td>
+                  <td>{{ scan.numBrokenLinks }}</td>
+                  <td>{{ scan.numMissingImages }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </section>
+  }
+</section>

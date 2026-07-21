@@ -1,0 +1,10 @@
+.app-shell {
+	min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
+}
+
+.main-content {
+	flex: 1;
+	padding-block: 1.2rem 2rem;
+}

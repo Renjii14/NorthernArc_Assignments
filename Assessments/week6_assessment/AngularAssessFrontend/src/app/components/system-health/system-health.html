@@ -1,0 +1,75 @@
+<section class="section">
+  <header class="page-header">
+    <h1>System Health</h1>
+    <p>Monitor the backend service status.</p>
+  </header>
+
+  @if (loading()) {
+    <app-loading message="Checking backend status..."></app-loading>
+  }
+
+  @if (!loading()) {
+    <div class="health-card card">
+      <div class="status-grid">
+        <div class="status-item">
+          <h3>Backend Status</h3>
+          @if (backendStatus() === 'online') {
+            <div class="status-indicator online">
+              <span class="status-dot"></span>
+              <span class="status-text">Online</span>
+            </div>
+          } @else if (backendStatus() === 'offline') {
+            <div class="status-indicator offline">
+              <span class="status-dot"></span>
+              <span class="status-text">Offline</span>
+            </div>
+          } @else {
+            <div class="status-indicator unknown">
+              <span class="status-dot"></span>
+              <span class="status-text">Unknown</span>
+            </div>
+          }
+        </div>
+
+        <div class="status-item">
+          <h3>Ready Status</h3>
+          @if (readyStatus() === 'ready') {
+            <div class="status-indicator online">
+              <span class="status-dot"></span>
+              <span class="status-text">Ready</span>
+            </div>
+          } @else if (readyStatus() === 'not-ready') {
+            <div class="status-indicator offline">
+              <span class="status-dot"></span>
+              <span class="status-text">Not Ready</span>
+            </div>
+          } @else {
+            <div class="status-indicator unknown">
+              <span class="status-dot"></span>
+              <span class="status-text">Unknown</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      @if (errorMessage()) {
+        <div class="error-message">
+          <p class="alert alert-error">{{ errorMessage() }}</p>
+        </div>
+      }
+
+      @if (lastCheckedTime()) {
+        <div class="last-checked">
+          <span class="label">Last Checked:</span>
+          <span class="time">{{ lastCheckedTime() | date: 'dd-MMM-yyyy hh:mm a' }}</span>
+        </div>
+      }
+
+      <div class="actions">
+        <button class="btn btn-primary" type="button" (click)="refresh()" [disabled]="loading()">
+          Refresh Status
+        </button>
+      </div>
+    </div>
+  }
+</section>

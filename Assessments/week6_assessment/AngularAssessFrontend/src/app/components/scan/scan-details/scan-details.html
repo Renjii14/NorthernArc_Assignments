@@ -1,0 +1,51 @@
+<section class="section">
+  <header class="page-header">
+    <h1>Scan Details</h1>
+    <p>Read-only view of the selected scan.</p>
+  </header>
+
+  <div class="page-actions">
+    <a class="btn btn-ghost" routerLink="/scans">Back to List</a>
+  </div>
+
+  @if (loading()) {
+    <app-loading message="Loading scan details..."></app-loading>
+  }
+
+  @if (error()) {
+    <p class="alert alert-error">{{ error() }}</p>
+  }
+
+  @if (success()) {
+    <p class="alert alert-success">{{ success() }}</p>
+  }
+
+  @if (!loading() && scan()) {
+    <article class="card details-grid">
+      <div class="detail-item">
+        <span class="label">ID</span>
+        <strong>{{ scan()?.id }}</strong>
+      </div>
+      <div class="detail-item">
+        <span class="label">Domain Name</span>
+        <strong>{{ scan()?.domainName }}</strong>
+      </div>
+      <div class="detail-item">
+        <span class="label">Number of Pages</span>
+        <strong>{{ scan()?.numPages }}</strong>
+      </div>
+      <div class="detail-item">
+        <span class="label">Number of Broken Links</span>
+        <strong>{{ scan()?.numBrokenLinks }}</strong>
+      </div>
+      <div class="detail-item">
+        <span class="label">Number of Missing Images</span>
+        <strong>{{ scan()?.numMissingImages }}</strong>
+      </div>
+      <div class="detail-item">
+        <span class="label">Deleted</span>
+        <strong>{{ scan()?.deleted ? 'Yes' : 'No' }}</strong>
+      </div>
+    </article>
+  }
+</section>

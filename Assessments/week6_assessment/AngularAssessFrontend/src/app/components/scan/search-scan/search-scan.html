@@ -1,0 +1,101 @@
+<section class="section">
+  <header class="page-header">
+    <h1>Search Scans</h1>
+    <p>Find scans by ID or domain name.</p>
+  </header>
+
+  <!-- Search by ID -->
+  <div class="card form-card">
+    <h2 class="card-title">Search by ID</h2>
+    <form [formGroup]="idForm" (ngSubmit)="searchById()" novalidate>
+      <div class="search-grid">
+        <div class="field">
+          <label for="scanId">Scan ID</label>
+          <input id="scanId" type="text" formControlName="scanId" placeholder="Enter scan ID" />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" [disabled]="loading() || idForm.invalid">
+          {{ loading() ? 'Searching...' : 'Search by ID' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Search by Domain -->
+  <div class="card form-card">
+    <h2 class="card-title">Search by Domain</h2>
+    <form [formGroup]="form" (ngSubmit)="search()" novalidate>
+      <div class="search-grid">
+        <div class="field">
+          <label for="domainName">Domain Name</label>
+          <input id="domainName" type="text" formControlName="domainName" placeholder="example.com" />
+        </div>
+
+        <div class="field">
+          <label for="orderBy">Sort By</label>
+          <select id="orderBy" formControlName="orderBy">
+            @for (option of orderByOptions; track option) {
+              <option [value]="option">{{ option }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" [disabled]="loading() || form.invalid">
+          {{ loading() ? 'Searching...' : 'Search' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  @if (loading()) {
+    <app-loading message="Searching scans..."></app-loading>
+  }
+
+  @if (success()) {
+    <p class="alert alert-success">{{ success() }}</p>
+  }
+
+  @if (error()) {
+    <p class="alert alert-error">{{ error() }}</p>
+  }
+
+  @if (!loading() && !error() && searched()) {
+    @if (results().length === 0) {
+      <app-empty-state
+        title="No matching scans"
+        message="Try another domain name or choose a different sort option."
+        actionLabel="View All Scans"
+        actionRoute="/scans"
+      ></app-empty-state>
+    } @else {
+      <div class="card table-wrap">
+        <table class="app-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Domain Name</th>
+              <th>Number of Pages</th>
+              <th>Number of Broken Links</th>
+              <th>Number of Missing Images</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (scan of $any(results()); track scan.id) {
+              <tr>
+                <td>{{ scan.id | number: '1.0-0' }}</td>
+                <td>{{ scan.domainName | lowercase }}</td>
+                <td>{{ scan.numPages | number: '1.0-0' }}</td>
+                <td>{{ scan.numBrokenLinks | number: '1.0-0' }}</td>
+                <td>{{ scan.numMissingImages | number: '1.0-0' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</section>

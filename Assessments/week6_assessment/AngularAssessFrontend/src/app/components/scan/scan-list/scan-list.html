@@ -1,0 +1,64 @@
+<section class="section">
+  <header class="page-header">
+    <h1>All Scans</h1>
+    <p>Browse and manage all available scans.</p>
+  </header>
+
+  <div class="page-actions">
+    <a class="btn btn-primary" routerLink="/scans/add">Add Scan</a>
+    <a class="btn btn-secondary" routerLink="/scans/search">Search</a>
+  </div>
+
+  @if (loading()) {
+    <app-loading message="Loading scans..."></app-loading>
+  }
+
+  @if (success()) {
+    <p class="alert alert-success">{{ success() }}</p>
+  }
+
+  @if (error()) {
+    <p class="alert alert-error">{{ error() }}</p>
+  }
+
+  @if (!loading() && !error()) {
+    @if (scans().length === 0) {
+      <app-empty-state
+        title="No scans available"
+        message="Create a new scan to populate this table."
+        actionLabel="Add Scan"
+        actionRoute="/scans/add"
+      ></app-empty-state>
+    } @else {
+      <div class="card table-wrap">
+        <table class="app-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Domain Name</th>
+              <th>Number of Pages</th>
+              <th>Number of Broken Links</th>
+              <th>Number of Missing Images</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (scan of scans(); track scan.id) {
+              <tr>
+                <td>{{ scan.id }}</td>
+                <td>{{ scan.domainName }}</td>
+                <td>{{ scan.numPages }}</td>
+                <td>{{ scan.numBrokenLinks }}</td>
+                <td>{{ scan.numMissingImages }}</td>
+                <td class="table-actions">
+                  <a class="btn btn-ghost" [routerLink]="['/scans', scan.id]">View</a>
+                  <button class="btn btn-danger" type="button" (click)="deleteScan(scan)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</section>
