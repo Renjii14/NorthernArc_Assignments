@@ -1,0 +1,65 @@
+<div class="container py-4 py-md-5">
+  <app-page-header
+    title="Track List"
+    subtitle="View, inspect and remove tracks from your catalog."
+  />
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{ error() }}
+    </div>
+  }
+
+  @if (success()) {
+    <div class="alert alert-success" role="alert">
+      <i class="bi bi-check-circle me-2"></i>{{ success() }}
+    </div>
+  }
+
+  @if (loading()) {
+    <app-loading message="Loading tracks..." />
+  } @else if (tracks().length === 0) {
+    <app-empty-state title="No tracks found" message="Add a track to get started." />
+  } @else {
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Album Name</th>
+                <th>Release Date</th>
+                <th>Play Count</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (track of tracks(); track track.id ?? track.title) {
+                <tr>
+                  <td>{{ track.id ?? '-' }}</td>
+                  <td>{{ track.title }}</td>
+                  <td>{{ track.albumName }}</td>
+                  <td>{{ track.releaseDate | date: 'mediumDate' }}</td>
+                  <td>{{ track.playCount }}</td>
+                  <td class="text-end">
+                    <a
+                      class="btn btn-sm btn-outline-primary me-2"
+                      [routerLink]="['/tracks/details', track.title]"
+                    >
+                      <i class="bi bi-eye me-1"></i>View
+                    </a>
+                    <button class="btn btn-sm btn-outline-danger" (click)="onDelete(track)" [disabled]="loading()">
+                      <i class="bi bi-trash me-1"></i>Delete
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+</div>

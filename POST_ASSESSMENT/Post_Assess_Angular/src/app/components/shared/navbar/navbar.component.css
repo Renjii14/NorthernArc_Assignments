@@ -1,0 +1,19 @@
+.app-navbar {
+  background: linear-gradient(120deg, #0b3954, #087e8b);
+}
+
+.navbar-brand {
+  letter-spacing: 0.3px;
+}
+
+.nav-link {
+  border-radius: 8px;
+  padding-inline: 0.8rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}

@@ -1,0 +1,47 @@
+<div class="container py-4 py-md-5">
+  <app-page-header title="Track Details" subtitle="Details retrieved by track title." />
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{ error() }}
+    </div>
+  }
+
+  @if (success()) {
+    <div class="alert alert-success" role="alert">
+      <i class="bi bi-check-circle me-2"></i>{{ success() }}
+    </div>
+  }
+
+  @if (loading()) {
+    <app-loading message="Loading track details..." />
+  } @else if (!selectedTrack()) {
+    <app-empty-state title="Track not found" message="No track matched this title." />
+  } @else {
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-4">
+        <h5 class="card-title mb-3">{{ selectedTrack()!.title }}</h5>
+        <dl class="row mb-0">
+          <dt class="col-sm-3">ID</dt>
+          <dd class="col-sm-9">{{ selectedTrack()!.id ?? '-' }}</dd>
+
+          <dt class="col-sm-3">Title</dt>
+          <dd class="col-sm-9">{{ selectedTrack()!.title }}</dd>
+
+          <dt class="col-sm-3">Album Name</dt>
+          <dd class="col-sm-9">{{ selectedTrack()!.albumName }}</dd>
+
+          <dt class="col-sm-3">Release Date</dt>
+          <dd class="col-sm-9">{{ selectedTrack()!.releaseDate | date: 'mediumDate' }}</dd>
+
+          <dt class="col-sm-3">Play Count</dt>
+          <dd class="col-sm-9">{{ selectedTrack()!.playCount }}</dd>
+        </dl>
+      </div>
+    </div>
+  }
+
+  <a class="btn btn-outline-secondary mt-3" routerLink="/tracks">
+    <i class="bi bi-arrow-left me-2"></i>Back to Track List
+  </a>
+</div>

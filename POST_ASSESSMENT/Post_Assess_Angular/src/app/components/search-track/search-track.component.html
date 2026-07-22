@@ -1,0 +1,65 @@
+<div class="container py-4 py-md-5">
+  <app-page-header title="Search Track" subtitle="Find a track by its exact title." />
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{ error() }}
+    </div>
+  }
+
+  @if (success()) {
+    <div class="alert alert-success" role="alert">
+      <i class="bi bi-check-circle me-2"></i>{{ success() }}
+    </div>
+  }
+
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body p-4">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="row g-3 align-items-end" novalidate>
+        <div class="col-md-8">
+          <label for="title" class="form-label">Title</label>
+          <input id="title" type="text" class="form-control" formControlName="title" />
+          @if (hasTitleError()) {
+            <div class="invalid-feedback d-block">Title is required.</div>
+          }
+        </div>
+        <div class="col-md-4 d-grid">
+          <button class="btn btn-primary" type="submit" [disabled]="loading()">
+            @if (loading()) {
+              <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+            }
+            Search
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <app-loading message="Searching track..." />
+  } @else if (selectedTrack()) {
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-4">
+        <h5 class="card-title mb-3">{{ selectedTrack()!.title }}</h5>
+        <dl class="row mb-0">
+          <dt class="col-sm-3">ID</dt>
+          <dd class="col-sm-9">{{ selectedTrack()!.id ?? '-' }}</dd>
+
+          <dt class="col-sm-3">Title</dt>
+          <dd class="col-sm-9">{{ selectedTrack()!.title }}</dd>
+
+          <dt class="col-sm-3">Album Name</dt>
+          <dd class="col-sm-9">{{ selectedTrack()!.albumName }}</dd>
+
+          <dt class="col-sm-3">Release Date</dt>
+          <dd class="col-sm-9">{{ selectedTrack()!.releaseDate | date: 'mediumDate' }}</dd>
+
+          <dt class="col-sm-3">Play Count</dt>
+          <dd class="col-sm-9">{{ selectedTrack()!.playCount }}</dd>
+        </dl>
+      </div>
+    </div>
+  } @else if (searched()) {
+    <app-empty-state title="No track found" message="Try searching with a different title." />
+  }
+</div>

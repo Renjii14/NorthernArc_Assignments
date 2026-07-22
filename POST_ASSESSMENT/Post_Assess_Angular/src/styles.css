@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --app-bg: #f3f8fa;
+  --app-text: #1c2e35;
+  --card-border: #d7e6eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Public Sans", "Segoe UI", sans-serif;
+  color: var(--app-text);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(8, 126, 139, 0.14), transparent 36%),
+    radial-gradient(circle at 85% 12%, rgba(11, 57, 84, 0.12), transparent 32%),
+    linear-gradient(180deg, #f9fcfd 0%, var(--app-bg) 100%);
+}
+
+.card {
+  border: 1px solid var(--card-border);
+}
+
+.table thead th {
+  background-color: #eff6f8;
+  color: #284451;
+}

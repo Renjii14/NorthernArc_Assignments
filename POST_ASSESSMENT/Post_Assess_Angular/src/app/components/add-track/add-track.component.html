@@ -1,0 +1,68 @@
+<div class="container py-4 py-md-5">
+  <app-page-header title="Add Track" subtitle="Create a new music track entry." />
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{ error() }}
+    </div>
+  }
+
+  @if (success()) {
+    <div class="alert alert-success" role="alert">
+      <i class="bi bi-check-circle me-2"></i>{{ success() }}
+    </div>
+  }
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+      <form [formGroup]="trackForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label" for="title">Title</label>
+            <input id="title" class="form-control" type="text" formControlName="title" />
+            @if (hasError('title', 'required')) {
+              <div class="invalid-feedback d-block">Title is required.</div>
+            }
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="albumName">Album Name</label>
+            <input id="albumName" class="form-control" type="text" formControlName="albumName" />
+            @if (hasError('albumName', 'required')) {
+              <div class="invalid-feedback d-block">Album Name is required.</div>
+            }
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="releaseDate">Release Date</label>
+            <input id="releaseDate" class="form-control" type="datetime-local" formControlName="releaseDate" />
+            @if (hasError('releaseDate', 'required')) {
+              <div class="invalid-feedback d-block">Release Date is required.</div>
+            }
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="playCount">Play Count</label>
+            <input id="playCount" class="form-control" type="number" min="0" formControlName="playCount" />
+            @if (hasError('playCount', 'required')) {
+              <div class="invalid-feedback d-block">Play Count is required.</div>
+            }
+            @if (hasError('playCount', 'min')) {
+              <div class="invalid-feedback d-block">Play Count must be 0 or greater.</div>
+            }
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+          <button class="btn btn-success" type="submit" [disabled]="loading()">
+            @if (loading()) {
+              <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+            }
+            Submit Track
+          </button>
+          <button class="btn btn-outline-secondary" type="button" routerLink="/tracks" [disabled]="loading()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
